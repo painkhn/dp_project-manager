@@ -17,9 +17,12 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $project = Project::where('id', $id)->first();
+        return Inertia::render('Project', [
+            'project' => $project
+        ]);
     }
 
     public function create_index()

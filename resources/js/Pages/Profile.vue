@@ -9,6 +9,7 @@
         canLogin?: boolean;
         canRegister?: boolean;
         projects?: object;
+        user: object
     }>();
 
     onMounted(() => {
@@ -23,14 +24,18 @@
 </script>
 
 <template>
-    <Head :title="$page.props.auth.user.name" />
+    <Head :title="props.user.name" />
 
     <main>
         <div class="w-full min-h-screen flex flex-col my-20">
             <div class="max-w-4xl w-full mx-auto my-0 bg-white/10 rounded-xl p-10">
                 <ul>
                     <li v-for="project in props.projects" :key="project.id">
-                        asdasd
+                        <Link :href="route('project.index', { id: project.id })">
+                            {{ project.title }}
+                            <br>
+                            {{ project.description }}
+                        </Link>
                     </li>
                 </ul>
             </div>

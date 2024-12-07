@@ -19,7 +19,8 @@ class ProfileController extends Controller
         $user = User::where('id', $id)->with('project')->first();
         return Inertia::render('Profile', [
             // 'user_id' => Auth::id(),
-            'projects' => Project::where('user_id', $user->id)->get(),
+            'user' => $user,
+            'projects' => Project::where('user_id', $user->id)->with('user')->get(),
         ]);
     }
 
