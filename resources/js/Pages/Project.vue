@@ -4,15 +4,32 @@
     import { initFlowbite } from 'flowbite';
     import Header from '@/Components/main/Header.vue';
     import Sidebar from '@/Components/main/Sidebar.vue';
+    import ProjectInvite from '@/Components/projects/ProjectInvite.vue'
 
     const props = defineProps<{
         canLogin?: boolean;
         canRegister?: boolean;
         project: object;
+        users: object;
     }>();
+
+    const invitedUsers = ref<{ id: number; name: string }[]>([]);
+
+    const fetchInvitedUsers = async (projectId: number) => {
+        try {
+            const response = await axios.get(`/project/${projectId}/invited_users`)
+            invitedUsers.value = response.data
+            console.log('Приглашенные пользователи:', response.data);
+            // invitedUsers.value = response.data.map((user: { id: number }) => user.id)
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
     onMounted(() => {
         initFlowbite();
+        const projectId = props.project.id;
+        fetchInvitedUsers(projectId);
     });
 
     const isSidebarVisible = ref(false);
@@ -38,6 +55,23 @@
                 <span>-</span>
                 {{ props.project.end_date }}
             </p>
+            <ProjectInvite :projectId="props.project.id" @fetch-invited-users="fetchInvitedUsers" />
+            
+            <div class="w-1/2">
+                <h2 class="text-white text-xl mb-4 font-bold">
+                    Приглашены:
+                </h2>
+                <ul class="flex flex-col gap-2 bg-white/10" v-if="invitedUsers.length > 0">
+                    <li v-for="user in invitedUsers" :key="user.id" class="">
+                        <Link :href="route('profile.index', { id: user.id })" class="text-white font-semibold w-full h-full block px-4 py-2">
+                            {{ user.name }}
+                        </Link>
+                    </li>
+                    <!-- <li v-for="user in invitedUsers" :key="user.id" class="px-4 py-2">
+                        {{ user.name }}
+                    </li> -->
+                </ul>
+            </div>
         </div>
     </main>
 

@@ -55,7 +55,7 @@ const sidebarToggle = () => {
                             <Link :href="route('profile.edit')" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Редактировать</Link>
                         </li>
                         <li v-if="$page.props.auth.user">
-                            <Link :href="route('logout')" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Выйти</Link>
+                            <Link :href="route('logout')" method="POST" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Выйти</Link>
                         </li>
                         <li v-if="!$page.props.auth.user">
                             <Link :href="route('login')" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Вход</Link>

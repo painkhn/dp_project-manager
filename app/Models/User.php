@@ -50,4 +50,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Project::class);
     }
+
+    public function sentInvitations()
+    {
+        return $this->hasMany(ProjectInvitation::class, 'inviter_id');
+    }
+
+    // Связь с приглашениями, которые пользователь получил
+    public function receivedInvitations()
+    {
+        return $this->hasMany(ProjectInvitation::class, 'invitee_id');
+    }
 }

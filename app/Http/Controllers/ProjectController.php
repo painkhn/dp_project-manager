@@ -38,6 +38,14 @@ class ProjectController extends Controller
         //
     }
 
+    public function getInvitedUsers($projectId)
+    {
+        $project = Project::findOrFail($projectId);
+        $invitedUsers = $project->invitations()->with('invitee')->get()->pluck('invitee');
+
+        return response()->json($invitedUsers);
+    }
+
     /**
      * Store a newly created resource in storage.
      */

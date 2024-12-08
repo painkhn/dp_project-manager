@@ -28,13 +28,18 @@
 
     <main>
         <div class="w-full min-h-screen flex flex-col my-20">
-            <div class="max-w-4xl w-full mx-auto my-0 bg-white/10 rounded-xl p-10">
-                <ul>
+            <div class="max-w-4xl w-full mx-auto my-0 bg-white/10 rounded-xl p-5">
+                <ul class="flex flex-col gap-5">
                     <li v-for="project in props.projects" :key="project.id">
                         <Link :href="route('project.index', { id: project.id })">
-                            {{ project.title }}
-                            <br>
-                            {{ project.description }}
+                            <div class="w-full h-auto px-4 py-2 bg-white/10 rounded-md transition-all hover:bg-white/20">
+                                <h3 class="text-white font-bold text-xl mb-2">
+                                    {{ project.title }}
+                                </h3>
+                                <p class="text-white/90 font-semibold">
+                                    {{ project.description }}
+                                </p>
+                            </div>
                         </Link>
                     </li>
                 </ul>
