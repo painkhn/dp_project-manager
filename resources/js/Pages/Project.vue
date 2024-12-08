@@ -43,7 +43,7 @@
     <Head :title="props.project.title" />
 
     <main>
-        <div class="max-w-4xl mx-auto p-5 my-0 bg-white/10 rounded-xl">
+        <div class="max-w-4xl mx-auto p-5 my-20 bg-white/10 rounded-xl">
             <h1 class="text-white font-bold text-2xl mb-5">
                 {{ props.project.title }}
             </h1>
@@ -61,9 +61,9 @@
                 <h2 class="text-white text-xl mb-4 font-bold">
                     Приглашены:
                 </h2>
-                <ul class="flex flex-col gap-2 bg-white/10" v-if="invitedUsers.length > 0">
+                <ul class="flex flex-col gap-2 py-2 rounded-b-md bg-white/10" v-if="invitedUsers.length > 0">
                     <li v-for="user in invitedUsers" :key="user.id" class="">
-                        <Link :href="route('profile.index', { id: user.id })" class="text-white font-semibold w-full h-full block px-4 py-2">
+                        <Link :href="route('profile.index', { id: user.id })" class="text-white font-semibold w-full h-full block px-4 py-2 hover:bg-white/10 rounded-b-md">
                             {{ user.name }}
                         </Link>
                     </li>
