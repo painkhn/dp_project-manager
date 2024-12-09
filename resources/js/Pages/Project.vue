@@ -53,7 +53,6 @@
         initFlowbite();
         const projectId = props.project.id;
         fetchInvitedUsers(projectId);
-        console.log(props.users.id)
     });
 
     const isSidebarVisible = ref(false);
