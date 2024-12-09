@@ -51,7 +51,7 @@
 <template>
     <div class="flex flex-col gap-5 w-1/2">
         <div>
-            <input v-model="searchQuery" type="text" placeholder="Имя пользователя" @input="searchUsers" class="w-full text-white border-0 bg-transparent border-b border-white focus:!border-0 focus:!border-b focus:border-white focus:ring-0" />
+            <input v-model="searchQuery" type="text" placeholder="Имя пользователя" @input="searchUsers" class="w-full text-white border-0 bg-transparent border-b border-white focus:!border-0 focus:!border-b focus:border-white focus:ring-0 rounded-t-md focus:bg-white/5" />
             <ul v-if="users.length" class="bg-white/10 rounded-b-md flex flex-col gap-2">
                 <li v-for="user in users" :key="user.id" @click="selectUser(user)" class="text-white rounded-b-md w-full px-4 py-2 hover:bg-white/10">
                     {{ user.name }}

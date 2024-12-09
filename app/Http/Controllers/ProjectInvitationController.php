@@ -104,8 +104,15 @@ class ProjectInvitationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProjectInvitation $projectInvitation)
+    public function destroy($inviteeId)
     {
-        //
+        $projectInvitation = ProjectInvitation::where('invitee_id', $inviteeId)->first();
+
+        if ($projectInvitation) {
+            $projectInvitation->delete;
+            return response()->json(['message' => 'Приглашение удалено']);
+        }
+
+        return response()->json(['message' => 'Приглашение не было найдено'], 404);
     }
 }

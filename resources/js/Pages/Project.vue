@@ -5,13 +5,27 @@
     import Header from '@/Components/main/Header.vue';
     import Sidebar from '@/Components/main/Sidebar.vue';
     import ProjectInvite from '@/Components/projects/ProjectInvite.vue'
+    import axios from 'axios'
 
     const props = defineProps<{
         canLogin?: boolean;
         canRegister?: boolean;
-        project: object;
-        users: object;
+        project: Project;
+        users: User;
     }>();
+
+    interface Project {
+        id: number,
+        title: string,
+        description: string,
+        start_date: Date,
+        end_date: Date,
+    }
+
+    interface User {
+        id: number,
+        name: string,
+    }
 
     const invitedUsers = ref<{ id: number; name: string }[]>([]);
 
@@ -26,10 +40,20 @@
         }
     }
 
+    const deleteInvitation = async (inviteeId: number) => {
+        try {
+            const response = await axios.delete(route('invitation.delete', { inviteeId }))
+            fetchInvitedUsers(props.project.id)
+        } catch (error) {
+            console.log('Ошибка при удалении приглашения', error)
+        }
+    }
+
     onMounted(() => {
         initFlowbite();
         const projectId = props.project.id;
         fetchInvitedUsers(projectId);
+        console.log(props.users.id)
     });
 
     const isSidebarVisible = ref(false);
@@ -55,21 +79,23 @@
                 <span>-</span>
                 {{ props.project.end_date }}
             </p>
-            <ProjectInvite :projectId="props.project.id" @fetch-invited-users="fetchInvitedUsers" />
+            <ProjectInvite :projectId="props.project.id" @fetch-invited-users="fetchInvitedUsers" class="mb-5" />
             
-            <div class="w-1/2">
+            <div class="w-1/2" v-if="invitedUsers.length > 0">
                 <h2 class="text-white text-xl mb-4 font-bold">
                     Приглашены:
                 </h2>
                 <ul class="flex flex-col gap-2 py-2 rounded-b-md bg-white/10" v-if="invitedUsers.length > 0">
-                    <li v-for="user in invitedUsers" :key="user.id" class="">
+                    <li v-for="user in invitedUsers" :key="user.id" class="flex items-center pr-4">
                         <Link :href="route('profile.index', { id: user.id })" class="text-white font-semibold w-full h-full block px-4 py-2 hover:bg-white/10 rounded-b-md">
                             {{ user.name }}
                         </Link>
+                        <button @click="deleteInvitation(user.id)">
+                            <svg class="w-5 h-5 text-white transition-all hover:scale-125" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                            </svg>
+                        </button>
                     </li>
-                    <!-- <li v-for="user in invitedUsers" :key="user.id" class="px-4 py-2">
-                        {{ user.name }}
-                    </li> -->
                 </ul>
             </div>
         </div>

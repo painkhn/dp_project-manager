@@ -8,9 +8,22 @@
     const props = defineProps<{
         canLogin?: boolean;
         canRegister?: boolean;
-        projects?: object;
-        user: object
+        projects?: Project[];
+        user: User
     }>();
+
+    interface User {
+        id: number,
+        name: string,
+    }
+
+    interface Project {
+        id: number,
+        title: string,
+        description: string,
+        start_date: Date,
+        end_date: Date,
+    }
 
     onMounted(() => {
         initFlowbite();
@@ -29,7 +42,7 @@
     <main>
         <div class="w-full min-h-screen flex flex-col my-20">
             <div class="max-w-4xl w-full mx-auto my-0 bg-white/10 rounded-xl p-5">
-                <ul class="flex flex-col gap-5">
+                <ul class="flex flex-col gap-5" v-if="(props.projects as Project[])?.length > 0">
                     <li v-for="project in props.projects" :key="project.id">
                         <Link :href="route('project.index', { id: project.id })">
                             <div class="w-full h-auto px-4 py-2 bg-white/10 rounded-md transition-all hover:bg-white/20">
@@ -42,6 +55,11 @@
                             </div>
                         </Link>
                     </li>
+                </ul>
+                <ul v-else>
+                    <h2 class="text-xl text-white text-center">
+                        Вы пока не создали ни одной темы
+                    </h2>
                 </ul>
             </div>
         </div>
