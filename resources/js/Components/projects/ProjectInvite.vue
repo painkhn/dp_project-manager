@@ -51,23 +51,20 @@ const sendInvitation = async () => {
 <template>
     <div class="flex flex-col gap-5 w-1/2">
         <div>
-<<<<<<< HEAD
-            <input v-model="searchQuery" type="text" placeholder="Имя пользователя" @input="searchUsers" class="w-full text-white border-0 bg-transparent border-b border-white focus:!border-0 focus:!border-b focus:border-white focus:ring-0 rounded-t-md focus:bg-white/5" />
-=======
             <input v-model="searchQuery" type="text" placeholder="Имя пользователя" @input="searchUsers"
-                class="w-full text-white border-0 bg-transparent border-b border-white focus:!border-0 focus:!border-b focus:border-white focus:ring-0" />
->>>>>>> 0eadac2c69d029bfc3f6d400a2fcebed9244d4b3
+                class="w-full text-white border-0 bg-transparent border-b border-white focus:!border-0 focus:!border-b focus:border-white focus:ring-0 rounded-t-md focus:bg-white/5" />
             <ul v-if="users.length" class="bg-white/10 rounded-b-md flex flex-col gap-2">
-                <select name="" id="" class="bg-white/10 border-0 text-white">
+                <!-- <select name="" id="" class="bg-white/10 border-0 text-white">
                     <option selected class="text-black">Выберите пользователя</option>
                     <option :value="user.id" v-for="user in users" :key="user.id" @click="selectUser(user)"
                         class="bg-white/10 text-black">
                         {{ user.name }}
                     </option>
-                </select>
-                <!-- <li v-for="user in users" :key="user.id" @click="selectUser(user)" class="text-white rounded-b-md w-full px-4 py-2 hover:bg-white/10">
+                </select> -->
+                <li v-for="user in users" :key="user.id" @click="selectUser(user)"
+                    class="text-white rounded-b-md w-full px-4 py-2 hover:bg-white/10">
                     {{ user.name }}
-                </li> -->
+                </li>
             </ul>
         </div>
         <button :disabled="!selectedUser" @click="sendInvitation"

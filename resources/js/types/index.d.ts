@@ -1,8 +1,14 @@
 export interface User {
     id: number;
     name: string;
-    email: string;
-    email_verified_at?: string;
+}
+
+export interface Project {
+    id: number,
+    title: string,
+    description: string,
+    start_date: Date,
+    end_date: Date,
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> =
