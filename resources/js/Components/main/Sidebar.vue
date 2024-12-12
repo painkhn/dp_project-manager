@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Link } from '@inertiajs/vue3';
+import InviteList from './InviteList.vue';
 
 const props = defineProps<{
     isVisible: boolean;
@@ -14,11 +15,18 @@ const emit = defineEmits<{
 const sidebarToggle = () => {
     emit('toggle');
 };
+
+const invitesIsVisible = ref(false)
+
+const invitesToggle = async () => {
+    invitesIsVisible.value = !invitesIsVisible.value
+}
 </script>
 
 <template>
     <aside id="default-sidebar" :class="['fixed top-0 left-0 z-40 w-64 h-screen transition-transform', { '-translate-x-full': !isVisible }]" aria-label="Sidenav">
         <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-black dark:border-gray-700">
+            <InviteList v-if="invitesIsVisible" :isVisible="invitesIsVisible" @toggle="sidebarToggle" />
             <ul class="space-y-2">
                 <li>
                     <Link :href="route('index')" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 group">
@@ -36,12 +44,11 @@ const sidebarToggle = () => {
                         <li>
                             <Link :href="route('profile.index', { id: $page.props.auth.user.id})" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Профиль</Link>
                         </li>
-                        
                         <li>
                             <Link :href="route('project.create')" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Создать проект</Link>
                         </li>
                         <li>
-                            <a href="#" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Приглашения</a>
+                            <button type="button" @click="invitesToggle" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Приглашения</button>
                         </li>
                     </ul>
                 </li>
