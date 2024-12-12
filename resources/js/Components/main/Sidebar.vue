@@ -36,11 +36,12 @@ const sidebarToggle = () => {
                         <li>
                             <Link :href="route('profile.index', { id: $page.props.auth.user.id})" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Профиль</Link>
                         </li>
-                        <li>
-                            <a href="#" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Мои проекты</a>
-                        </li>
+                        
                         <li>
                             <Link :href="route('project.create')" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Создать проект</Link>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Приглашения</a>
                         </li>
                     </ul>
                 </li>
@@ -55,7 +56,7 @@ const sidebarToggle = () => {
                             <Link :href="route('profile.edit')" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Редактировать</Link>
                         </li>
                         <li v-if="$page.props.auth.user">
-                            <Link :href="route('logout')" method="POST" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Выйти</Link>
+                            <Link :href="route('logout')" method="post" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Выйти</Link>
                         </li>
                         <li v-if="!$page.props.auth.user">
                             <Link :href="route('login')" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Вход</Link>

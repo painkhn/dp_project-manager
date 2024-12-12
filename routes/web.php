@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/profile/edit', 'edit')->name('profile.edit');
         Route::get('/profile/update', 'edit')->name('profile.update');
         Route::get('/profile/destroy', 'edit')->name('profile.destroy');
+        Route::post('/profile/new_avatar', 'updateAvatar')->name('new_avatar');
     });
     Route::controller(ProjectController::class)->group(function() {
         Route::get('/project/create', 'create_index')->name('project.create');
