@@ -34,7 +34,7 @@ const submit = () => {
         <div class="max-w-2xl w-full mx-auto h-auto bg-white/10 p-5 rounded-md">
             <form @submit.prevent="submit">
                 <div>
-                    <InputLabel for="email" value="Email" />
+                    <InputLabel for="email" value="Электронная почта" />
         
                     <TextInput
                         id="email"
@@ -50,7 +50,7 @@ const submit = () => {
                 </div>
         
                 <div class="mt-4">
-                    <InputLabel for="password" value="Password" />
+                    <InputLabel for="password" value="Пароль" />
         
                     <TextInput
                         id="password"
@@ -83,6 +83,9 @@ const submit = () => {
                 </div>
             </form>
         </div>
+        <a :href="route('index')" class="text-white block mt-5">
+            На главную
+        </a>
     </div>
 
     <div v-if="status" class="mb-4 text-sm font-medium text-green-600">

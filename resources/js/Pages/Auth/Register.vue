@@ -113,6 +113,9 @@ const submit = () => {
                 </div>
             </form>
         </div>
+        <a :href="route('index')" class="text-white block mt-5">
+            На главную
+        </a>
     </div>
 
     
