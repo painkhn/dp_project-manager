@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
-use App\Models\{ User, Project };
+use App\Models\{ User, Project, ProjectInvitation };
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,11 +16,16 @@ class ProfileController extends Controller
 {
     public function index($id)
     {
+        $invitations = ProjectInvitation::where('invitee_id', $id)
+            ->with('project', 'inviter')
+            ->get();
         $user = User::where('id', $id)->with('project')->first();
+        // здесь нужно как то получить и передать приглашения
         return Inertia::render('Profile', [
             // 'user_id' => Auth::id(),
             'user' => $user,
             'projects' => Project::where('user_id', $user->id)->with('user')->get(),
+            'invitations' => $invitations
         ]);
     }
 

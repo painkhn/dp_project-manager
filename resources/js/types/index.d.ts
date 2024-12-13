@@ -13,6 +13,13 @@ export interface Project {
     end_date: Date,
 }
 
+export interface ProjectInvitation {
+    id: number;
+    project: Project;
+    inviter: User;
+    status: string;
+}
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> =
     T & {
         auth: {

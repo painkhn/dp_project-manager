@@ -5,13 +5,15 @@ import { initFlowbite } from 'flowbite';
 import Header from '@/Components/main/Header.vue';
 import Sidebar from '@/Components/main/Sidebar.vue';
 import AvatarChangeForm from '@/Components/profile/AvatarChangeForm.vue';
-import { Project, User } from '@/types'
+import { Project, User, ProjectInvitation } from '@/types'
+import axios from 'axios';
 
 const props = defineProps<{
     canLogin?: boolean;
     canRegister?: boolean;
     projects?: Project[];
-    user: User
+    user: User;
+    invitations?: ProjectInvitation[];
 }>();
 
 onMounted(() => {
@@ -28,6 +30,24 @@ const sidebarToggle = () => {
 const avatarChangeIsVisible = async () => {
     isVisibleAvatarChange.value = !isVisibleAvatarChange.value
 }
+
+const acceptInvitation = async (invitationId: number) => {
+    try {
+        const response = await axios.post(`/invitations/${invitationId}/accept`);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const rejectInvitation = async (invitationId: number) => {
+    try {
+        await axios.post(`/invitations/${invitationId}/reject`);
+        // Обновите список приглашений после отклонения
+        // Например, можно удалить приглашение из списка
+    } catch (error) {
+        console.error(error);
+    }
+};
 </script>
 
 <template>
@@ -85,6 +105,36 @@ const avatarChangeIsVisible = async () => {
                 <ul v-else>
                     <h2 class="text-xl text-white text-center">
                         Вы пока не создали ни одной темы
+                    </h2>
+                </ul>
+            </div>
+            <div class="max-w-xl w-full h-auto p-5 bg-white/10 rounded-xl">
+                <h2 class="font-bold text-white text-xl mb-5">
+                    ВАШИ ПРОЕКТЫ
+                </h2>
+                <ul class="flex flex-col gap-2 py-2 rounded-md bg-white/10 px-4" v-if="(props.invitations as ProjectInvitation[])?.length > 0">
+                    <li v-for="invitation in props.invitations" :key="invitation.id" class="flex items-center pr-4">
+                        <Link :href="route('project.index', { id: invitation.project.id })">
+                            <div>
+                            <p class="text-white font-semibold">
+                                {{ invitation.project.title }}
+                            </p>
+                            <p class="text-white/90">
+                                Приглашение от {{ invitation.inviter.name }}
+                            </p>
+                        </div>
+                        </Link>
+                        <button @click="acceptInvitation(invitation.id)" class="ml-auto text-green-500">
+                            Принять
+                        </button>
+                        <button @click="rejectInvitation(invitation.id)" class="text-red-500">
+                            Отклонить
+                        </button>
+                    </li>
+                </ul>
+                <ul v-else>
+                    <h2 class="text-xl text-white text-center">
+                        У вас нет приглашений
                     </h2>
                 </ul>
             </div>
