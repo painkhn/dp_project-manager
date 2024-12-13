@@ -26,7 +26,7 @@ const invitesToggle = async () => {
 <template>
     <aside id="default-sidebar" :class="['fixed top-0 left-0 z-40 w-64 h-screen transition-transform', { '-translate-x-full': !isVisible }]" aria-label="Sidenav">
         <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-black dark:border-gray-700">
-            <InviteList v-if="invitesIsVisible" :isVisible="invitesIsVisible" @toggle="sidebarToggle" />
+            <InviteList v-if="invitesIsVisible" :isVisible="invitesIsVisible" @toggle="invitesToggle" />
             <ul class="space-y-2">
                 <li>
                     <Link :href="route('index')" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 group">
