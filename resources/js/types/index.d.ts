@@ -20,7 +20,7 @@ export interface ProjectInvitation {
     project: Project;
     // user: User;
     inviter: User;
-    invitee: User;
+    invitee: User | null;
     status: string;
 }
 

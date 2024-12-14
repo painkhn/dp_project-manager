@@ -30,12 +30,15 @@ class ProjectInvitationController extends Controller
     {
         $invitation = ProjectInvitation::findOrFail($invitationId);
 
+        // Проверка, что текущий пользователь — это тот, кому отправлено приглашение
         if ($invitation->invitee_id !== Auth::id()) {
             return response()->json(['message' => 'Вы не можете принять это приглашение'], 403);
-        };
+        }
 
+        // Обновляем статус приглашения
         $invitation->update(['status' => 'accepted']);
 
+        // Добавляем пользователя в таблицу project_users
         $invitation->project->users()->attach($invitation->invitee_id);
 
         return response()->json(['message' => 'Приглашение принято']);

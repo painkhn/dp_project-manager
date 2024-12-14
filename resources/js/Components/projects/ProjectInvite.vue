@@ -48,7 +48,7 @@ const sendInvitation = async () => {
         // location.reload()
         setTimeout(function() {
             location.reload()
-        }, 2500)
+        }, 2100)
         getAlert()
         selectedUser.value = null
         searchQuery.value = ''

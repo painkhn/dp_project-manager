@@ -12,7 +12,7 @@ const props = defineProps<{
     canLogin?: boolean;
     canRegister?: boolean;
     project: Project;
-    users: User;
+    user?: User;
     invitations?: ProjectInvitation[] | null;
 }>();
 
@@ -47,7 +47,7 @@ onMounted(() => {
     initFlowbite();
     const projectId = props.project.id;
     fetchInvitedUsers(projectId);
-    console.log(props.invitations);
+    // console.log(props.user);
 });
 
 const isSidebarVisible = ref(false);
@@ -84,11 +84,11 @@ const sidebarToggle = () => {
                 </h2>
                 <ul class="flex flex-col gap-2 py-2 rounded-b-md bg-white/10" v-if="props.invitations && props.invitations.length > 0">
                     <li v-for="invitation in props.invitations" :key="invitation.id" class="flex items-center pr-4">
-                        <Link :href="route('profile.index', { id: invitation.invitee.id })"
+                        <Link :href="route('profile.index', { id: invitation.invitee?.id })"
                             class="text-white font-semibold w-full h-full block px-4 py-2 hover:bg-white/10 rounded-b-md">
-                            {{ invitation.invitee.name }}
+                            {{ invitation.invitee?.name }}
                         </Link>
-                        <button @click="deleteInvitation(invitation.id)">
+                        <button @click="deleteInvitation(invitation.id)" v-if="$page.props.auth.user.id == invitation.inviter.id">
                             <svg class="w-5 h-5 text-white transition-all hover:scale-125" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">

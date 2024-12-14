@@ -20,8 +20,9 @@ class ProjectController extends Controller
     public function index($id)
     {
         $project = Project::with('user')->with('invitations', 'invitations.invitee')->where('id', $id)->findOrFail($id);
+        
         // $invitation = ProjectInvitation::where('id', $id)->first();
-        // dd($project->invitations);
+        // dd($project->user);
         return Inertia::render('Project', [
             'project' => $project,
             'invitations' => $project->invitations
