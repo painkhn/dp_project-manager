@@ -11,6 +11,7 @@ export interface Project {
     description: string,
     start_date: Date,
     end_date: Date,
+    user: User
 }
 
 export interface ProjectInvitation {

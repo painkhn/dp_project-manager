@@ -28,6 +28,9 @@ const fetchInvitedUsers = async (projectId: number) => {
     }
 }
 
+// console.log();
+
+
 const deleteInvitation = async (inviteeId: number) => {
     try {
         const response = await axios.delete(route('invitation.delete', { inviteeId }))
@@ -67,7 +70,7 @@ const sidebarToggle = () => {
                 <span>-</span>
                 {{ props.project.end_date }}
             </p>
-            <ProjectInvite :projectId="props.project.id" @fetch-invited-users="fetchInvitedUsers" class="mb-5" />
+            <ProjectInvite :projectId="props.project.id" @fetch-invited-users="fetchInvitedUsers" class="mb-5" v-if="$page.props.auth.user.id == props.project.user.id" />
 
             <div class="w-1/2" v-if="invitedUsers.length > 0">
                 <h2 class="text-white text-xl mb-4 font-bold">

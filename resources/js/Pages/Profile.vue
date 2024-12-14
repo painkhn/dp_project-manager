@@ -59,7 +59,11 @@ const rejectInvitation = async (invitationId: number) => {
             <div class="max-w-52 w-full text-white bg-white/10 rounded-xl p-5">
                 <ul class="flex flex-col gap-2">
                     <li>
-                        <div class="avatar cursor-pointer" @click="avatarChangeIsVisible">
+                        <div class="avatar cursor-pointer" @click="avatarChangeIsVisible" v-if="$page.props.auth.user.id == ($page.props.user as User).id">
+                            <img v-if="props.user.avatar == null" src='/img/avatar_default.jpg' class="profileInfo__avatar w-40 h-40 rounded border-slate-200" alt="">
+                            <img v-else :src="`/storage/` + props.user.avatar" alt="Аватарка" encType="multipart/form-data" class="profileInfo__avatar w-40 h-40 rounded border-slate-200">
+                        </div>
+                        <div v-else>
                             <img v-if="props.user.avatar == null" src='/img/avatar_default.jpg' class="profileInfo__avatar w-40 h-40 rounded border-slate-200" alt="">
                             <img v-else :src="`/storage/` + props.user.avatar" alt="Аватарка" encType="multipart/form-data" class="profileInfo__avatar w-40 h-40 rounded border-slate-200">
                         </div>
@@ -85,8 +89,11 @@ const rejectInvitation = async (invitationId: number) => {
             <div class="max-w-4xl w-full bg-white/10 rounded-xl p-5">
                 <ul class="flex flex-col gap-5" v-if="(props.projects as Project[])?.length > 0">
                     <li>
-                        <h2 class="font-bold text-white text-xl">
+                        <h2 class="font-bold text-white text-xl" v-if="$page.props.auth.user.id == ($page.props.user as User).id">
                             ВАШИ ПРОЕКТЫ
+                        </h2>
+                        <h2 class="font-bold text-white text-xl" v-else>
+                            ПРОЕКТЫ ПОЛЬЗОВАТЕЛЯ {{ ($page.props.user as User).name }}
                         </h2>
                     </li>
                     <li v-for="project in props.projects" :key="project.id">
@@ -108,7 +115,7 @@ const rejectInvitation = async (invitationId: number) => {
                     </h2>
                 </ul>
             </div>
-            <div class="max-w-xl w-full h-auto p-5 bg-white/10 rounded-xl">
+            <div class="max-w-xl w-full h-auto p-5 bg-white/10 rounded-xl" v-if="$page.props.auth.user.id == ($page.props.user as User).id">
                 <h2 class="font-bold text-white text-xl mb-5">
                     ВАШИ ПРОЕКТЫ
                 </h2>

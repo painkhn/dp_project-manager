@@ -19,7 +19,7 @@ class ProjectController extends Controller
      */
     public function index($id)
     {
-        $project = Project::where('id', $id)->first();
+        $project = Project::with('user')->where('id', $id)->first();
         return Inertia::render('Project', [
             'project' => $project
         ]);
