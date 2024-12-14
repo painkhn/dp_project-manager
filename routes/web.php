@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/project/{projectId}/invite', 'invite')->name('project.invite');
         Route::post('/invitations/{invitationId}/accept', 'accept');
         Route::post('/invitations/{invitationId}/reject', 'reject');
-        Route::delete('/invitations/invitee/{inviteeId}/delete', 'destroy')->name('invitation.delete');
+        Route::delete('/invitations/{invitationId}/delete', 'destroy')->name('invitation.delete');
     });
 });
 

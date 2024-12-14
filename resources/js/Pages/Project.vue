@@ -6,13 +6,14 @@ import Header from '@/Components/main/Header.vue';
 import Sidebar from '@/Components/main/Sidebar.vue';
 import ProjectInvite from '@/Components/projects/ProjectInvite.vue'
 import axios from 'axios'
-import { Project, User } from '@/types'
+import { Project, ProjectInvitation, User } from '@/types'
 
 const props = defineProps<{
     canLogin?: boolean;
     canRegister?: boolean;
     project: Project;
     users: User;
+    invitations?: ProjectInvitation[] | null;
 }>();
 
 const invitedUsers = ref<{ id: number; name: string }[]>([]);
@@ -21,20 +22,22 @@ const fetchInvitedUsers = async (projectId: number) => {
     try {
         const response = await axios.get(`/project/${projectId}/invited_users`)
         invitedUsers.value = response.data
-        console.log('Приглашенные пользователи:', response.data);
+        // console.log('Приглашенные пользователи:', response.data);
         // invitedUsers.value = response.data.map((user: { id: number }) => user.id)
     } catch (error) {
         console.error(error)
     }
 }
 
-// console.log();
+// const invitationId = (props.invitation as ProjectInvitation[]).id
+// const invitationId = (props.invitation as ProjectInvitation) ? (props.invitation as ProjectInvitation).id : null
 
-
-const deleteInvitation = async (inviteeId: number) => {
+const deleteInvitation = async (invitationId: number) => {
     try {
-        const response = await axios.delete(route('invitation.delete', { inviteeId }))
-        fetchInvitedUsers(props.project.id)
+        const response = await axios.delete(route('invitation.delete', { invitationId } ))
+        // fetchInvitedUsers(invitationId)
+        console.log('success');
+        location.reload()
     } catch (error) {
         console.log('Ошибка при удалении приглашения', error)
     }
@@ -44,6 +47,7 @@ onMounted(() => {
     initFlowbite();
     const projectId = props.project.id;
     fetchInvitedUsers(projectId);
+    console.log(props.invitations);
 });
 
 const isSidebarVisible = ref(false);
@@ -54,7 +58,6 @@ const sidebarToggle = () => {
 </script>
 
 <template>
-
     <Head :title="props.project.title" />
 
     <main>
@@ -75,27 +78,29 @@ const sidebarToggle = () => {
             </Link>
             <ProjectInvite :projectId="props.project.id" @fetch-invited-users="fetchInvitedUsers" class="mb-5" v-if="$page.props.auth.user.id == props.project.user.id" />
 
-            <div class="w-1/2" v-if="invitedUsers.length > 0">
+            <div class="w-1/2 mt-5">
                 <h2 class="text-white text-xl mb-4 font-bold">
                     Приглашены:
                 </h2>
-                <ul class="flex flex-col gap-2 py-2 rounded-b-md bg-white/10" v-if="invitedUsers.length > 0">
-                    <li v-for="user in invitedUsers" :key="user.id" class="flex items-center pr-4">
-                        <Link :href="route('profile.index', { id: user.id })"
+                <ul class="flex flex-col gap-2 py-2 rounded-b-md bg-white/10" v-if="props.invitations && props.invitations.length > 0">
+                    <li v-for="invitation in props.invitations" :key="invitation.id" class="flex items-center pr-4">
+                        <Link :href="route('profile.index', { id: invitation.invitee.id })"
                             class="text-white font-semibold w-full h-full block px-4 py-2 hover:bg-white/10 rounded-b-md">
-                        {{ user.name }}
+                            {{ invitation.invitee.name }}
                         </Link>
-                        <button @click="deleteInvitation(user.id)">
+                        <button @click="deleteInvitation(invitation.id)">
                             <svg class="w-5 h-5 text-white transition-all hover:scale-125" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2"
-                                    d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
+                                    d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" 
+                                />
                             </svg>
                         </button>
                     </li>
                 </ul>
+                <p v-else class="text-white/80">Приглашений пока нет</p>
             </div>
         </div>
     </main>

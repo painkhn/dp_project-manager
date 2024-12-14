@@ -86,8 +86,8 @@ const rejectInvitation = async (invitationId: number) => {
                     </li>
                 </ul>
             </div>
-            <div class="max-w-4xl w-full bg-white/10 rounded-xl p-5">
-                <ul class="flex flex-col gap-5" v-if="(props.projects as Project[])?.length > 0">
+            <div class="max-w-4xl w-full bg-white/10 rounded-xl p-5" v-if="(props.projects as Project[])?.length > 0">
+                <ul class="flex flex-col gap-5">
                     <li>
                         <h2 class="font-bold text-white text-xl" v-if="$page.props.auth.user.id == ($page.props.user as User).id">
                             ВАШИ ПРОЕКТЫ
@@ -109,11 +109,11 @@ const rejectInvitation = async (invitationId: number) => {
                         </Link>
                     </li>
                 </ul>
-                <ul v-else>
+                <!-- <ul v-else>
                     <h2 class="text-xl text-white text-center">
                         Вы пока не создали ни одной темы
                     </h2>
-                </ul>
+                </ul> -->
             </div>
             <div class="max-w-xl w-full h-auto p-5 bg-white/10 rounded-xl" v-if="$page.props.auth.user.id == ($page.props.user as User).id">
                 <h2 class="font-bold text-white text-xl mb-5">

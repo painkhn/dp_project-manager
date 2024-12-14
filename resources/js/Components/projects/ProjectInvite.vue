@@ -45,6 +45,10 @@ const sendInvitation = async () => {
     try {
         await axios.post(`/project/${props.projectId}/invite`, { invitee_id: selectedUser.value.id })
         // alert('Приглашение отправлено')
+        // location.reload()
+        setTimeout(function() {
+            location.reload()
+        }, 2500)
         getAlert()
         selectedUser.value = null
         searchQuery.value = ''

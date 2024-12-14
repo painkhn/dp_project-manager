@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
+use App\Models\{ Project, ProjectInvitation };
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -19,9 +19,12 @@ class ProjectController extends Controller
      */
     public function index($id)
     {
-        $project = Project::with('user')->where('id', $id)->first();
+        $project = Project::with('user')->with('invitations', 'invitations.invitee')->where('id', $id)->findOrFail($id);
+        // $invitation = ProjectInvitation::where('id', $id)->first();
+        // dd($project->invitations);
         return Inertia::render('Project', [
-            'project' => $project
+            'project' => $project,
+            'invitations' => $project->invitations
         ]);
     }
 
