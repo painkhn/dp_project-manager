@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, defineProps, defineEmits, onMounted } from 'vue'
 import axios from 'axios'
+import Alert from '../messages/Alert.vue';
 
 const props = defineProps<{
     projectId: number;
@@ -11,6 +12,7 @@ const emit = defineEmits(['fetch-invited-users'])
 const searchQuery = ref('')
 const users = ref<{ id: number; name: string }[]>([])
 const selectedUser = ref<{ id: number; name: string } | null>(null)
+const alertIsVisible = ref(false)
 // const invitedUsers = ref<number[]>([])
 
 const searchUsers = async () => {
@@ -29,12 +31,21 @@ const selectUser = (user: { id: number; name: string }) => {
     users.value = []
 }
 
+const getAlert = () => {
+    const alert = document.querySelector('.alert')
+    alert?.classList.add('!opacity-100')
+    setTimeout(function() {
+        alert?.classList.remove('!opacity-100')
+    }, 2000)
+}
+
 const sendInvitation = async () => {
     if (!selectedUser.value) return
 
     try {
         await axios.post(`/project/${props.projectId}/invite`, { invitee_id: selectedUser.value.id })
-        alert('Приглашение отправлено')
+        // alert('Приглашение отправлено')
+        getAlert()
         selectedUser.value = null
         searchQuery.value = ''
         emit('fetch-invited-users', props.projectId)
@@ -49,6 +60,7 @@ const sendInvitation = async () => {
 </script>
 
 <template>
+    <Alert class="alert opacity-0 transition-all" />
     <div class="flex flex-col gap-5 w-1/2">
         <div>
             <input v-model="searchQuery" type="text" placeholder="Имя пользователя" @input="searchUsers"

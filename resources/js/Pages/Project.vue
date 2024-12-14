@@ -70,6 +70,9 @@ const sidebarToggle = () => {
                 <span>-</span>
                 {{ props.project.end_date }}
             </p>
+            <Link :href="route('profile.index', { id: props.project.user.id })" class="text-white/80 mb-5">
+                {{ props.project.user.name }}
+            </Link>
             <ProjectInvite :projectId="props.project.id" @fetch-invited-users="fetchInvitedUsers" class="mb-5" v-if="$page.props.auth.user.id == props.project.user.id" />
 
             <div class="w-1/2" v-if="invitedUsers.length > 0">

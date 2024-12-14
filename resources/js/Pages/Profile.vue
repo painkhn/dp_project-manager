@@ -117,7 +117,7 @@ const rejectInvitation = async (invitationId: number) => {
             </div>
             <div class="max-w-xl w-full h-auto p-5 bg-white/10 rounded-xl" v-if="$page.props.auth.user.id == ($page.props.user as User).id">
                 <h2 class="font-bold text-white text-xl mb-5">
-                    ВАШИ ПРОЕКТЫ
+                    ВАШИ ПРИГЛАШЕНИЯ
                 </h2>
                 <ul class="flex flex-col gap-2 py-2 rounded-md bg-white/10 px-4" v-if="(props.invitations as ProjectInvitation[])?.length > 0">
                     <li v-for="invitation in props.invitations" :key="invitation.id" class="flex items-center pr-4">
