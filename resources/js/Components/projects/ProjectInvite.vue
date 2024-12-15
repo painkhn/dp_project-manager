@@ -45,10 +45,10 @@ const sendInvitation = async () => {
     try {
         await axios.post(`/project/${props.projectId}/invite`, { invitee_id: selectedUser.value.id })
         // alert('Приглашение отправлено')
-        // location.reload()
-        setTimeout(function() {
-            location.reload()
-        }, 2100)
+        location.reload()
+        // setTimeout(function() {
+        //     location.reload()
+        // }, 2100)
         getAlert()
         selectedUser.value = null
         searchQuery.value = ''
@@ -64,7 +64,7 @@ const sendInvitation = async () => {
 </script>
 
 <template>
-    <Alert class="alert opacity-0 transition-all" />
+    <Alert class="alert opacity-0 transition-all" :value="'Успешно'" />
     <div class="flex flex-col gap-5 w-1/2">
         <div>
             <input v-model="searchQuery" type="text" placeholder="Имя пользователя" @input="searchUsers"

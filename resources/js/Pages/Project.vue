@@ -7,6 +7,7 @@ import Sidebar from '@/Components/main/Sidebar.vue';
 import ProjectInvite from '@/Components/projects/ProjectInvite.vue'
 import axios from 'axios'
 import { Project, ProjectInvitation, User } from '@/types'
+import Alert from '@/Components/messages/Alert.vue';
 
 const props = defineProps<{
     canLogin?: boolean;
@@ -16,6 +17,14 @@ const props = defineProps<{
     invitations?: ProjectInvitation[] | null;
 }>();
 
+const getAlert = () => {
+    const alert = document.querySelector('.alert-deleted')
+    alert?.classList.add('!opacity-100')
+    setTimeout(function() {
+        alert?.classList.remove('!opacity-100')
+    }, 2000)
+}
+
 const invitedUsers = ref<{ id: number; name: string }[]>([]);
 
 const fetchInvitedUsers = async (projectId: number) => {
@@ -23,7 +32,7 @@ const fetchInvitedUsers = async (projectId: number) => {
         const response = await axios.get(`/project/${projectId}/invited_users`)
         invitedUsers.value = response.data
         // console.log('Приглашенные пользователи:', response.data);
-        // invitedUsers.value = response.data.map((user: { id: number }) => user.id)
+        invitedUsers.value = response.data.map((user: { id: number }) => user.id)
     } catch (error) {
         console.error(error)
     }
@@ -37,6 +46,7 @@ const deleteInvitation = async (invitationId: number) => {
         const response = await axios.delete(route('invitation.delete', { invitationId } ))
         // fetchInvitedUsers(invitationId)
         console.log('success');
+        getAlert()
         location.reload()
     } catch (error) {
         console.log('Ошибка при удалении приглашения', error)
@@ -61,6 +71,7 @@ const sidebarToggle = () => {
     <Head :title="props.project.title" />
 
     <main>
+        <Alert class="alert-deleted opacity-0 transition-all" :value="'Удалено'" />
         <div class="max-w-4xl mx-auto p-5 my-20 bg-white/10 rounded-xl">
             <h1 class="text-white font-bold text-2xl mb-5">
                 {{ props.project.title }}
@@ -88,7 +99,7 @@ const sidebarToggle = () => {
                             class="text-white font-semibold w-full h-full block px-4 py-2 hover:bg-white/10 rounded-b-md">
                             {{ invitation.invitee?.name }}
                         </Link>
-                        <button @click="deleteInvitation(invitation.id)" v-if="$page.props.auth.user.id == invitation.inviter.id">
+                        <button @click="deleteInvitation(invitation.id)" v-if="$page.props.auth.user.id == props.project.user.id">
                             <svg class="w-5 h-5 text-white transition-all hover:scale-125" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
