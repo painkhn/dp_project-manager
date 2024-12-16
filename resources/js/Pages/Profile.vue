@@ -23,6 +23,15 @@ onMounted(() => {
 const isSidebarVisible = ref(false);
 const isVisibleAvatarChange = ref(false);
 
+const newUserProject = async (projectId: number) => {
+    try {
+        await axios.get(route('project.user.store', { projectId: projectId }))
+        console.log('норм');        
+    } catch (error) {
+        console.log('ошибка лол: ', error);        
+    }
+}
+
 const sidebarToggle = () => {
     isSidebarVisible.value = !isSidebarVisible.value;
 };
@@ -134,7 +143,7 @@ const rejectInvitation = async (invitationId: number) => {
                             </p>
                         </div>
                         </Link>
-                        <button @click="acceptInvitation(invitation.id)" class="ml-auto text-green-500">
+                        <button @click="newUserProject(invitation.project.id)" class="ml-auto text-green-500">
                             Принять
                         </button>
                         <button @click="rejectInvitation(invitation.id)" class="text-red-500">

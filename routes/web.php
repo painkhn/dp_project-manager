@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{ ProfileController, ProjectController, ProjectInvitationController, UserController };
+use App\Http\Controllers\{ ProfileController, ProjectController, ProjectInvitationController, UserController, ProjectUserController };
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,6 +38,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/invitations/{invitationId}/accept', 'accept');
         Route::post('/invitations/{invitationId}/reject', 'reject');
         Route::delete('/invitations/{invitationId}/delete', 'destroy')->name('invitation.delete');
+    });
+    Route::controller(ProjectUserController::class)->group(function(): void {
+        Route::get('/project/{projectId}/users/store', 'store')->name('project.user.store');
     });
 });
 

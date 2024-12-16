@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProjectUser;
+use App\Models\{ ProjectUser, Project, User, ProjectInvitation };
 use App\Http\Requests\StoreProjectUserRequest;
 use App\Http\Requests\UpdateProjectUserRequest;
+use Auth;
 
 class ProjectUserController extends Controller
 {
@@ -27,9 +28,15 @@ class ProjectUserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProjectUserRequest $request)
+    public function store(StoreProjectUserRequest $request, $projectId)
     {
-        //
+        $project = Project::findOrFail($projectId);
+        // dd($project);
+        ProjectUser::create([
+            'project_id' => $project->id,
+            'user_id' => Auth::user()->id
+        ]);
+        return redirect()->back();
     }
 
     /**
