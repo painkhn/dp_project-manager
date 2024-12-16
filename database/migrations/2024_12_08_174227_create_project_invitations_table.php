@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('inviter_id'); // Пользователь, который отправил приглашение
             $table->unsignedBigInteger('invitee_id'); // Пользователь, которому отправили приглашение
-            $table->string('status')->default('pending'); // pending, accepted, rejected
+            $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending'); // pending, accepted, rejected
             $table->timestamps();
         
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');

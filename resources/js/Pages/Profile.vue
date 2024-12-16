@@ -26,7 +26,8 @@ const isVisibleAvatarChange = ref(false);
 const newUserProject = async (projectId: number) => {
     try {
         await axios.get(route('project.user.store', { projectId: projectId }))
-        console.log('норм');        
+        console.log('норм');
+        location.reload()
     } catch (error) {
         console.log('ошибка лол: ', error);        
     }
@@ -132,23 +133,25 @@ const rejectInvitation = async (invitationId: number) => {
                     ВАШИ ПРИГЛАШЕНИЯ
                 </h2>
                 <ul class="flex flex-col gap-2 py-2 rounded-md bg-white/10 px-4" v-if="(props.invitations as ProjectInvitation[])?.length > 0">
-                    <li v-for="invitation in props.invitations" :key="invitation.id" class="flex items-center pr-4">
-                        <Link :href="route('project.index', { id: invitation.project.id })">
-                            <div>
-                            <p class="text-white font-semibold">
-                                {{ invitation.project.title }}
-                            </p>
-                            <p class="text-white/90">
-                                Приглашение от {{ invitation.inviter.name }}
-                            </p>
+                    <li v-for="invitation in (props.invitations as ProjectInvitation[])" :key="invitation.id" class="flex items-center pr-4">
+                        <div v-if="invitation.status == 'pending'">
+                            <Link :href="route('project.index', { id: invitation.project.id })">
+                                <div>
+                                    <p class="text-white font-semibold">
+                                        {{ invitation.project.title }}
+                                    </p>
+                                    <p class="text-white/90">
+                                        Приглашение от {{ invitation.inviter.name }}
+                                    </p>
+                                </div>
+                            </Link>
+                            <button @click="newUserProject(invitation.project.id)" class="ml-auto text-green-500">
+                                Принять
+                            </button>
+                            <button @click="rejectInvitation(invitation.id)" class="text-red-500">
+                                Отклонить
+                            </button>
                         </div>
-                        </Link>
-                        <button @click="newUserProject(invitation.project.id)" class="ml-auto text-green-500">
-                            Принять
-                        </button>
-                        <button @click="rejectInvitation(invitation.id)" class="text-red-500">
-                            Отклонить
-                        </button>
                     </li>
                 </ul>
                 <ul v-else>

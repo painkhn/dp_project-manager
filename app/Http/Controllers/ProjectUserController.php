@@ -31,11 +31,17 @@ class ProjectUserController extends Controller
     public function store(StoreProjectUserRequest $request, $projectId)
     {
         $project = Project::findOrFail($projectId);
-        // dd($project);
-        ProjectUser::create([
-            'project_id' => $project->id,
-            'user_id' => Auth::user()->id
-        ]);
+        $user = Auth::user();
+        $invitation = ProjectInvitation::where('invitee_id', $user->id)->where('project_id', $project->id)->first();
+        if ($invitation) {
+            ProjectUser::create([
+                'project_id' => $project->id,
+                'user_id' => $user->id
+            ]);
+            $invitation->update([
+                'status' => 'accepted'
+            ]);
+        }
         return redirect()->back();
     }
 
