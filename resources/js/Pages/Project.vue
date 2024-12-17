@@ -15,6 +15,7 @@ const props = defineProps<{
     project: Project;
     user?: User;
     invitations?: ProjectInvitation[] | null;
+    pendingInvitations: ProjectInvitation[] | null;
 }>();
 
 const getAlert = () => {
@@ -93,8 +94,8 @@ const sidebarToggle = () => {
                 <h2 class="text-white text-xl mb-4 font-bold">
                     Приглашены:
                 </h2>
-                <ul class="flex flex-col gap-2 py-2 rounded-b-md bg-white/10" v-if="props.invitations && props.invitations.length > 0">
-                    <li v-for="invitation in props.invitations" :key="invitation.id" class="flex items-center pr-4">
+                <ul class="flex flex-col gap-2 py-2 rounded-b-md bg-white/10" v-if="props.pendingInvitations && props.pendingInvitations.length > 0">
+                    <li v-for="invitation in props.pendingInvitations" :key="invitation.id" class="flex items-center pr-4">
                         <Link :href="route('profile.index', { id: invitation.invitee?.id })"
                             class="text-white font-semibold w-full h-full block px-4 py-2 hover:bg-white/10 rounded-b-md">
                             {{ invitation.invitee?.name }}

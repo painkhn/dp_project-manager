@@ -20,12 +20,13 @@ class ProjectController extends Controller
     public function index($id)
     {
         $project = Project::with('user')->with('invitations', 'invitations.invitee')->where('id', $id)->findOrFail($id);
-        
+        $pendingInvitations = ProjectInvitation::where('project_id', $id)->where('status', 'pending')->with('invitee')->get();
         // $invitation = ProjectInvitation::where('id', $id)->first();
         // dd($project->user);
         return Inertia::render('Project', [
             'project' => $project,
-            'invitations' => $project->invitations
+            'invitations' => $project->invitations,
+            'pendingInvitations' => $pendingInvitations
         ]);
     }
 
