@@ -17,6 +17,7 @@ class ProfileController extends Controller
     public function index($id)
     {
         $invitations = ProjectInvitation::where('invitee_id', $id)
+            ->where('status', 'pending')
             ->with('project', 'inviter')
             ->get();
         $user = User::where('id', $id)->with('project')->first();

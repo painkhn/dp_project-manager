@@ -41,14 +41,6 @@ const avatarChangeIsVisible = async () => {
     isVisibleAvatarChange.value = !isVisibleAvatarChange.value
 }
 
-const acceptInvitation = async (invitationId: number) => {
-    try {
-        const response = await axios.post(`/invitations/${invitationId}/accept`);
-    } catch (error) {
-        console.error(error);
-    }
-};
-
 const rejectInvitation = async (invitationId: number) => {
     try {
         await axios.post(`/invitations/${invitationId}/reject`);
@@ -132,25 +124,27 @@ const rejectInvitation = async (invitationId: number) => {
                 <h2 class="font-bold text-white text-xl mb-5">
                     ВАШИ ПРИГЛАШЕНИЯ
                 </h2>
-                <ul class="flex flex-col gap-2 py-2 rounded-md bg-white/10 px-4" v-if="(props.invitations as ProjectInvitation[])?.length > 0">
+                <ul class="flex flex-col gap-2 py-2 rounded-md bg-white/10 px-4" v-if="(props.invitations as ProjectInvitation[])?.length > 0 && (props.invitations as ProjectInvitation[]).some(invitation => invitation.status === 'pending')">
                     <li v-for="invitation in (props.invitations as ProjectInvitation[])" :key="invitation.id" class="flex items-center pr-4">
-                        <div v-if="invitation.status == 'pending'">
-                            <Link :href="route('project.index', { id: invitation.project.id })">
-                                <div>
+                        <div class="flex justify-between w-full items-center">
+                            <div>
+                                <Link :href="route('project.index', { id: invitation.project.id })">
                                     <p class="text-white font-semibold">
                                         {{ invitation.project.title }}
                                     </p>
-                                    <p class="text-white/90">
-                                        Приглашение от {{ invitation.inviter.name }}
-                                    </p>
-                                </div>
-                            </Link>
-                            <button @click="newUserProject(invitation.project.id)" class="ml-auto text-green-500">
-                                Принять
-                            </button>
-                            <button @click="rejectInvitation(invitation.id)" class="text-red-500">
-                                Отклонить
-                            </button>
+                                </Link>
+                                <p class="text-white/90">
+                                    Приглашение от <Link :href="route('profile.index', { id: invitation.inviter.id })">{{ invitation.inviter.name }}</Link>
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button @click="newUserProject(invitation.project.id)" class="ml-auto text-green-500">
+                                    Принять
+                                </button>
+                                <button @click="rejectInvitation(invitation.id)" class="text-red-500">
+                                    Отклонить
+                                </button>
+                            </div>
                         </div>
                     </li>
                 </ul>
