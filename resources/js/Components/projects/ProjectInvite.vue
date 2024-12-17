@@ -61,7 +61,7 @@ const sendInvitation = async () => {
 
 <template>
     <Alert class="alert opacity-0 transition-all" :value="'Успешно'" />
-    <div class="flex flex-col gap-5 w-1/2">
+    <div class="flex flex-col gap-5 w-full">
         <div>
             <input v-model="searchQuery" type="text" placeholder="Имя пользователя" @input="searchUsers"
                 class="w-full text-white border-0 bg-transparent border-b border-white focus:!border-0 focus:!border-b focus:border-white focus:ring-0 rounded-t-md focus:bg-white/5" />

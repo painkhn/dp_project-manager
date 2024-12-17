@@ -12,6 +12,7 @@ export interface Project {
     start_date: Date;
     end_date: Date;
     user: User;
+    // projectUsers: ProjectUser[] | null;
     // invitation: ProjectInvitation | null;
 }
 
@@ -22,6 +23,12 @@ export interface ProjectInvitation {
     inviter: User;
     invitee: User | null;
     status: string;
+}
+
+export interface ProjectUser {
+    id: number;
+    project: Project;
+    user_id: number;
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> =

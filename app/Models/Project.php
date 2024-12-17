@@ -27,4 +27,9 @@ class Project extends Model
     {
         return $this->hasMany(ProjectInvitation::class);
     }
+
+    public function projectUser()
+    {
+        return $this->hasMany(ProjectUser::class);
+    }
 }

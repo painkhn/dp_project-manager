@@ -5,8 +5,9 @@ import { initFlowbite } from 'flowbite';
 import Header from '@/Components/main/Header.vue';
 import Sidebar from '@/Components/main/Sidebar.vue';
 import ProjectInvite from '@/Components/projects/ProjectInvite.vue'
+import ProjectUsers from '@/Components/projects/ProjectUsers.vue';
 import axios from 'axios'
-import { Project, ProjectInvitation, User } from '@/types'
+import { Project, ProjectInvitation, User, ProjectUser } from '@/types'
 import Alert from '@/Components/messages/Alert.vue';
 
 const props = defineProps<{
@@ -16,6 +17,7 @@ const props = defineProps<{
     user?: User;
     invitations?: ProjectInvitation[] | null;
     pendingInvitations: ProjectInvitation[] | null;
+    projectUsers: ProjectUser[] | null;
 }>();
 
 const getAlert = () => {
@@ -58,7 +60,7 @@ onMounted(() => {
     initFlowbite();
     const projectId = props.project.id;
     fetchInvitedUsers(projectId);
-    // console.log(props.user);
+    console.log(props.projectUsers);
 });
 
 const isSidebarVisible = ref(false);
@@ -73,24 +75,23 @@ const sidebarToggle = () => {
 
     <main>
         <Alert class="alert-deleted opacity-0 transition-all" :value="'Удалено'" />
-        <div class="max-w-4xl mx-auto p-5 my-20 bg-white/10 rounded-xl">
-            <h1 class="text-white font-bold text-2xl mb-5">
-                {{ props.project.title }}
-            </h1>
-            <p class="text-white/90 font-semibold mb-5">
-                {{ props.project.description }}
-            </p>
-            <p class="text-white/80 mb-5 flex items-center gap-3">
-                {{ props.project.start_date }}
-                <span>-</span>
-                {{ props.project.end_date }}
-            </p>
-            <Link :href="route('profile.index', { id: props.project.user.id })" class="text-white/80 mb-5">
-                {{ props.project.user.name }}
-            </Link>
-            <ProjectInvite :projectId="props.project.id" @fetch-invited-users="fetchInvitedUsers" class="mb-5" v-if="$page.props.auth.user.id == props.project.user.id" />
-
-            <div class="w-1/2 mt-5">
+        <div class="max-w-4xl mx-auto p-5 my-20 bg-white/10 rounded-xl flex">
+            <div class="w-1/2">
+                    <h1 class="text-white font-bold text-2xl mb-5">
+                    {{ props.project.title }}
+                </h1>
+                <p class="text-white/90 font-semibold mb-5">
+                    {{ props.project.description }}
+                </p>
+                <p class="text-white/80 mb-5 flex items-center gap-3">
+                    {{ props.project.start_date }}
+                    <span>-</span>
+                    {{ props.project.end_date }}
+                </p>
+                <Link :href="route('profile.index', { id: props.project.user.id })" class="text-white/80 mb-5">
+                    {{ props.project.user.name }}
+                </Link>
+                <ProjectInvite :projectId="props.project.id" @fetch-invited-users="fetchInvitedUsers" class="mb-5" v-if="$page.props.auth.user.id == props.project.user.id" />
                 <h2 class="text-white text-xl mb-4 font-bold">
                     Приглашены:
                 </h2>
@@ -113,6 +114,13 @@ const sidebarToggle = () => {
                     </li>
                 </ul>
                 <p v-else class="text-white/80">Приглашений пока нет</p>
+            </div>
+            <div class="w-1/2 text-white">
+                <h2 class="font-bold text-xl mb-2">
+                    Пользователи проекта
+                </h2>
+                <button type="button" class="px-4 py-2 border border-white rounded-md transition-all hover:bg-white/10">Открыть</button>
+                <ProjectUsers :projectUsers="props.projectUsers" :project="props.project" />
             </div>
         </div>
     </main>
