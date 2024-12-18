@@ -29,6 +29,13 @@ const getAlert = () => {
 }
 
 const invitedUsers = ref<{ id: number; name: string }[]>([]);
+const projectUsersIsVisible = ref(false);
+
+const toggleProjectUsers = async () => {
+    const openBtn = document.querySelector('.open-btn')
+    projectUsersIsVisible.value = !projectUsersIsVisible.value
+    openBtn?.classList.toggle('hidden')
+}
 
 const fetchInvitedUsers = async (projectId: number) => {
     try {
@@ -116,11 +123,11 @@ const sidebarToggle = () => {
                 <p v-else class="text-white/80">Приглашений пока нет</p>
             </div>
             <div class="w-1/2 text-white">
-                <h2 class="font-bold text-xl mb-2">
+                <h2 class="font-bold text-xl mb-4">
                     Пользователи проекта
                 </h2>
-                <button type="button" class="px-4 py-2 border border-white rounded-md transition-all hover:bg-white/10">Открыть</button>
-                <ProjectUsers :projectUsers="props.projectUsers" :project="props.project" />
+                <button @click="toggleProjectUsers" type="button" class="open-btn w-full py-2 border border-white rounded-md transition-all hover:bg-white/10">Открыть</button>
+                <ProjectUsers v-if="projectUsersIsVisible" @toggle="toggleProjectUsers" :isVisible="projectUsersIsVisible" :projectUsers="props.projectUsers" :project="props.project" />
             </div>
         </div>
     </main>

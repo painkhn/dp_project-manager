@@ -28,6 +28,7 @@ export interface ProjectInvitation {
 export interface ProjectUser {
     id: number;
     project: Project;
+    user: User;
     user_id: number;
 }
 
