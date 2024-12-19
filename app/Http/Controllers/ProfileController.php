@@ -20,6 +20,7 @@ class ProfileController extends Controller
             ->where('status', 'pending')
             ->with('project', 'inviter')
             ->get();
+        // dd($invitations);
         $user = User::where('id', $id)->with('project')->first();
         // здесь нужно как то получить и передать приглашения
         return Inertia::render('Profile', [

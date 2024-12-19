@@ -32,7 +32,7 @@ class ProjectUserController extends Controller
     {
         $project = Project::findOrFail($projectId);
         $user = Auth::user();
-        $invitation = ProjectInvitation::where('invitee_id', $user->id)->where('project_id', $project->id)->first();
+        $invitation = ProjectInvitation::where('invitee_id', $user->id)->where('project_id', $project->id)->where('status', 'pending')->first();
         if ($invitation) {
             ProjectUser::create([
                 'project_id' => $project->id,
@@ -41,6 +41,7 @@ class ProjectUserController extends Controller
             $invitation->update([
                 'status' => 'accepted'
             ]);
+            return response()->json(['Статус приглашения изменён']);
         }
         return redirect()->back();
     }

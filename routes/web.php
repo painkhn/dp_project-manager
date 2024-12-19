@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/invitations/{invitationId}/delete', 'destroy')->name('invitation.delete');
     });
     Route::controller(ProjectUserController::class)->group(function(): void {
-        Route::post('/project/{projectId}/users/store', 'store')->name('project.user.store');
+        Route::post('/project/user/{id}/store', 'store')->name('project.user.store');
         Route::delete('/project/user/{id}/delete', 'destroy')->name('project.user.delete');
     });
 });
