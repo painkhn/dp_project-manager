@@ -6,6 +6,7 @@ import Header from '@/Components/main/Header.vue';
 import Sidebar from '@/Components/main/Sidebar.vue';
 import ProjectInvite from '@/Components/projects/ProjectInvite.vue'
 import ProjectUsers from '@/Components/projects/ProjectUsers.vue';
+import ProjectInviteList from '@/Components/projects/ProjectInviteList.vue'
 import axios from 'axios'
 import { Project, ProjectInvitation, User, ProjectUser } from '@/types'
 import Alert from '@/Components/messages/Alert.vue';
@@ -51,18 +52,6 @@ const fetchInvitedUsers = async (projectId: number) => {
 // const invitationId = (props.invitation as ProjectInvitation[]).id
 // const invitationId = (props.invitation as ProjectInvitation) ? (props.invitation as ProjectInvitation).id : null
 
-const deleteInvitation = async (invitationId: number) => {
-    try {
-        const response = await axios.delete(route('invitation.delete', { invitationId } ))
-        // fetchInvitedUsers(invitationId)
-        console.log('success');
-        getAlert()
-        location.reload()
-    } catch (error) {
-        console.log('Ошибка при удалении приглашения', error)
-    }
-}
-
 onMounted(() => {
     initFlowbite();
     const projectId = props.project.id;
@@ -102,7 +91,7 @@ const sidebarToggle = () => {
                 <h2 class="text-white text-xl mb-4 font-bold">
                     Приглашены:
                 </h2>
-                <ul class="flex flex-col gap-2 py-2 rounded-b-md bg-white/10" v-if="props.pendingInvitations && props.pendingInvitations.length > 0">
+                <!-- <ul class="flex flex-col gap-2 py-2 rounded-b-md bg-white/10" v-if="props.pendingInvitations && props.pendingInvitations.length > 0">
                     <li v-for="invitation in props.pendingInvitations" :key="invitation.id" class="flex items-center pr-4">
                         <Link :href="route('profile.index', { id: invitation.invitee?.id })"
                             class="text-white font-semibold w-full h-full block px-4 py-2 hover:bg-white/10 rounded-b-md">
@@ -119,8 +108,8 @@ const sidebarToggle = () => {
                             </svg>
                         </button>
                     </li>
-                </ul>
-                <p v-else class="text-white/80">Приглашений пока нет</p>
+                </ul> -->
+                <ProjectInviteList :pendingInvitations="props.pendingInvitations" :project="props.project" />
             </div>
             <div class="w-1/2 text-white">
                 <h2 class="font-bold text-xl mb-4">

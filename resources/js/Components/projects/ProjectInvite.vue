@@ -66,13 +66,6 @@ const sendInvitation = async () => {
             <input v-model="searchQuery" type="text" placeholder="Имя пользователя" @input="searchUsers"
                 class="w-full text-white border-0 bg-transparent border-b border-white focus:!border-0 focus:!border-b focus:border-white focus:ring-0 rounded-t-md focus:bg-white/5" />
             <ul v-if="users.length" class="bg-white/10 rounded-b-md flex flex-col gap-2">
-                <!-- <select name="" id="" class="bg-white/10 border-0 text-white">
-                    <option selected class="text-black">Выберите пользователя</option>
-                    <option :value="user.id" v-for="user in users" :key="user.id" @click="selectUser(user)"
-                        class="bg-white/10 text-black">
-                        {{ user.name }}
-                    </option>
-                </select> -->
                 <li v-for="user in users" :key="user.id" @click="selectUser(user)"
                     class="text-white rounded-b-md w-full px-4 py-2 hover:bg-white/10">
                     {{ user.name }}
