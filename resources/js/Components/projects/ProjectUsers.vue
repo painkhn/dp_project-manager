@@ -35,7 +35,7 @@
 
 <template>
     <div>
-        <ul class="mb-5 flex flex-col gap-2">
+        <ul class="mb-5 flex flex-col gap-2" v-if="(props.projectUsers as ProjectUser[])?.length > 0">
             <li v-for="(user, index) in props.projectUsers" :key="index">
                 <div class="px-4 py-2 bg-white/10 rounded-md transition-all hover:bg-white/20 flex justify-between">
                     <Link :href="route('profile.index', { id: user.user.id })" class="text-white text-lg hover:underline rounded-md transition-all">
@@ -47,6 +47,11 @@
                 </div>
             </li>
         </ul>
+        <div v-else class="mb-5">
+            <p class="text-white/85">
+                Не добавлено ни одного пользователя
+            </p>
+        </div>
         <button @click="toggleProjectUsers()" class="w-full py-2 border border-white rounded-md transition-all hover:bg-white/10">
             Закрыть
         </button>
