@@ -2,6 +2,7 @@
     import { defineProps, onMounted, defineEmits } from 'vue';
     import { ProjectUser, Project } from '@/types'
     import { Link } from '@inertiajs/vue3';
+    import axios from 'axios';
 
     const props = defineProps<{
         projectUsers: ProjectUser[] | null;
@@ -17,6 +18,16 @@
         emit('toggle');
     };
 
+    const projectUserDelete = async (userId: number) => {
+        try {
+            await axios.delete(route('project.user.delete', { id: userId }));
+            // После успешного удаления можно обновить список пользователей
+            location.reload(); // Перезагрузка страницы
+        } catch (error) {
+            console.error('Ошибка при удалении пользователя:', error);
+        }
+    };
+
     onMounted(() => {
         // console.log(props.projectUsers);
     })
@@ -26,14 +37,17 @@
     <div>
         <ul class="mb-5 flex flex-col gap-2">
             <li v-for="(user, index) in props.projectUsers" :key="index">
-                <Link :href="route('profile.index', { id: user.user.id })" class="text-white text-lg">
-                    <div class="px-4 py-2 bg-white/10 rounded-md transition-all hover:bg-white/20">
+                <div class="px-4 py-2 bg-white/10 rounded-md transition-all hover:bg-white/20 flex justify-between">
+                    <Link :href="route('profile.index', { id: user.user.id })" class="text-white text-lg hover:underline rounded-md transition-all">
                         {{ user.user.name }}
-                    </div>
-                </Link>
+                    </Link>
+                    <button @click="projectUserDelete(user.user.id)" class="transition-all hover:ring-1 hover:ring-white px-2 rounded-md">
+                        Удалить из проекта
+                    </button>
+                </div>
             </li>
         </ul>
-        <button @click="toggleProjectUsers()" class="w-full py-2 border border-white rounded-md">
+        <button @click="toggleProjectUsers()" class="w-full py-2 border border-white rounded-md transition-all hover:bg-white/10">
             Закрыть
         </button>
     </div>

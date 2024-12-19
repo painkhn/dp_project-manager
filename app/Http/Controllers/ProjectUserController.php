@@ -72,8 +72,15 @@ class ProjectUserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProjectUser $projectUser)
+    public function destroy($id)
     {
-        //
+        $projectUser = ProjectUser::where('user_id', $id)->first();
+        
+        if ($projectUser) {
+            $projectUser->delete();
+            return response()->json(['Пользователь удалён из проекта']);
+        }
+
+        return response()->json(['Не удалось удалить пользователя']);
     }
 }
