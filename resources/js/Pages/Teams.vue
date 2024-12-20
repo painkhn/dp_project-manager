@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import Sidebar from '@/Components/main/Sidebar.vue';
 import { ref, defineProps, onMounted } from 'vue';
-import { User } from '@/types'
+import { User, Teams } from '@/types'
 import { initFlowbite } from 'flowbite';
+import { Head, Link } from '@inertiajs/vue3';
 
 const props = defineProps<{
     user: User;
+    teams: Teams[] | null;
 }>()
 
 const isSidebarVisible = ref(false);
@@ -20,8 +22,17 @@ onMounted(() => {
 </script>
 
 <template>
+    <Head title="Список команд" />
+    
     <div>
-        
+        <Link :href="route('team.create')" class="text-white">Создать команду</Link>
+        <ul>
+            <li v-for="(team, index) in props.teams" :key="team.id" class="text-white">
+                <p>
+                    {{ team.title }}
+                </p>
+            </li>
+        </ul>
     </div>
 
     <button @click="sidebarToggle" class="absolute bottom-10 left-10 text-white font-bold z-10">

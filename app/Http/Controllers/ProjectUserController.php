@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\{ ProjectUser, Project, User, ProjectInvitation };
 use App\Http\Requests\StoreProjectUserRequest;
 use App\Http\Requests\UpdateProjectUserRequest;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectUserController extends Controller
 {
@@ -32,6 +32,7 @@ class ProjectUserController extends Controller
     {
         $project = Project::findOrFail($projectId);
         $user = Auth::user();
+        // dd($project);
         $invitation = ProjectInvitation::where('invitee_id', $user->id)->where('project_id', $project->id)->where('status', 'pending')->first();
         if ($invitation) {
             ProjectUser::create([

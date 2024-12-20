@@ -25,7 +25,7 @@ const isVisibleAvatarChange = ref(false);
 
 const newUserProject = async (projectId: number) => {
     try {
-        await axios.post(route('project.user.store', { projectId: projectId }))
+        await axios.post(route('project.user.store', { id: projectId }))
         console.log('норм');
         location.reload()
     } catch (error) {

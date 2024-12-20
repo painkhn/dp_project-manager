@@ -39,12 +39,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/invitations/{invitationId}/reject', 'reject');
         Route::delete('/invitations/{invitationId}/delete', 'destroy')->name('invitation.delete');
     });
-    Route::controller(ProjectUserController::class)->group(function(): void {
+    Route::controller(ProjectUserController::class)->group(function() {
         Route::post('/project/user/{id}/store', 'store')->name('project.user.store');
         Route::delete('/project/user/{id}/delete', 'destroy')->name('project.user.delete');
     });
     Route::controller(TeamController::class)->group(function() {
         Route::get('/user/{id}/teams/', 'index')->name('teams.list');
+        Route::get('/team/create', 'create')->name('team.create');
+        Route::post('/team/store', 'store')->name('team.store');
     });
 });
 
