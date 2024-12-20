@@ -39,6 +39,15 @@ export interface Teams {
     user_id: number;
 }
 
+export interface Team {
+    id: number;
+    title: string;
+    description: string;
+    user_id: number;
+    owner: User;
+    users: User[] | null;
+}
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> =
     T & {
         auth: {

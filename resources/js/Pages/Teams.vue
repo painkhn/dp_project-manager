@@ -25,13 +25,28 @@ onMounted(() => {
     <Head title="Список команд" />
     
     <div class="max-w-4xl w-full mx-auto my-20 bg-white/10 rounded-md p-5">
-        <ul>
-            <li v-for="(team, index) in props.teams" :key="team.id" class="text-white">
-                <p>
-                    {{ team.title }}
-                </p>
+        <ul v-if="(props.teams as Teams[])?.length > 0">
+            <li>
+                <h2 class="text-white text-xl font-bold mb-5">
+                    Ваши команды
+                </h2>
             </li>
+            <ul class="grid grid-cols-2 gap-5">
+                <li v-for="(team, index) in props.teams" :key="team.id" class="text-white">
+                    <!-- <p>
+                        {{ team.title }}
+                    </p> -->
+                    <Link :href="route('team.page', { id: team.id })">
+                        <div class="w-full py-2 bg-white/10 px-4 rounded-md transition-all hover:bg-white/15">
+                            {{ team.title }}
+                        </div>
+                    </Link>
+                </li>
+            </ul>
         </ul>
+        <p v-else class="text-white/80 text-xl">
+            Вы не состоите ни в одной команде
+        </p>
         <Link :href="route('team.create')" class="text-white mt-5 block">
             <button type="button" class="w-full py-2 bg-transparent transition-all border border-white rounded-md hover:bg-white/10">
                 Создать команду

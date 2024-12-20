@@ -19,7 +19,7 @@ class TeamController extends Controller
     {
         $user = User::where('id', $id)->with('project')->first();
         $teams = Team::where('owner_id', $user->id)->get();
-
+        // dd($teams);
         return Inertia::render('Teams', [
             'user' => $user,
             'teams' => $teams
@@ -52,15 +52,29 @@ class TeamController extends Controller
             'description' => $request->description,
         ]);
 
+        $user = Auth::user();
+        $user->update([
+            'team_id' => $team->id,
+        ]);
+
         return redirect()->back();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Team $team)
+    public function show($id)
     {
-        //
+        $user = Auth::user();
+        $team = Team::with('users')->where('id', $id)->first();
+        $owner = User::where('team_id', $id)->first();
+        // dd($team);
+        $teamUsers = Team::with('owner')->where('team_id', $id);
+        return Inertia::render('Team/TeamPage', [
+            'team' => $team,
+            'user' => $user,
+            'owner' => $owner
+        ]);
     }
 
     /**
@@ -82,8 +96,10 @@ class TeamController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Team $team)
+    public function destroy($id)
     {
-        //
+        $team = Team::where('id', $id)->first();
+        $team->delete();
+        return redirect()->back();
     }
 }

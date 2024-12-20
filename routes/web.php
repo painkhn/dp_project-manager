@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/user/{id}/teams/', 'index')->name('teams.list');
         Route::get('/team/create', 'create')->name('team.create');
         Route::post('/team/store', 'store')->name('team.store');
+        Route::get('/team/{id}', 'show')->name('team.page');
+        Route::delete('team/{id}/delete', 'destroy')->name('team.delete');
     });
 });
 

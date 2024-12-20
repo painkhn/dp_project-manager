@@ -102,15 +102,6 @@ const sidebarToggle = () => {
                 </h2>
                 <button @click="toggleProjectUsers" type="button" class="open-btn w-full py-2 border border-white rounded-md transition-all hover:bg-white/10">Открыть</button>    
                 <ProjectUsers v-if="projectUsersIsVisible" @toggle="toggleProjectUsers" :isVisible="projectUsersIsVisible" :projectUsers="props.projectUsers" :project="props.project" />
-
-                <h2 class="font-bold text-xl my-4">
-                    Удалённые пользователи
-                </h2>
-                <ul>
-                    <li v-for="(user, index) in props.projectUsers" :key="index">
-                        asdasd
-                    </li>
-                </ul>
             </div>
         </div>
     </main>

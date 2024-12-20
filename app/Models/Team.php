@@ -16,6 +16,11 @@ class Team extends Model
         'owner_id'
     ];
 
+    public function owner()
+    {
+        return $this->hasOne(User::class, 'owner_id');
+    }
+
     public function users()
     {
         return $this->hasMany(User::class);
