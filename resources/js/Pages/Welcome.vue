@@ -24,7 +24,7 @@ const sidebarToggle = () => {
 </script>
 
 <template>
-    <Head title="Welcome" />
+    <Head title="Главная страница" />
 
     <!-- <Header /> -->
 

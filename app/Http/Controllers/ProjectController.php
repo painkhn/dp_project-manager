@@ -22,6 +22,8 @@ class ProjectController extends Controller
         $project = Project::with('user')->with('invitations', 'invitations.invitee')->where('id', $id)->findOrFail($id);
         $pendingInvitations = ProjectInvitation::where('project_id', $id)->where('status', 'pending')->with('invitee')->get();
         $projectUser = ProjectUser::with('user')->where('project_id', $id)->get();
+        // $deletedUser = ProjectUser::with('user')->where('project_id', $id)->whereNotNull('deleted_at')->get();
+        // dd($projectUser->toArray());
         // dd($projectUser);
         // dd($projectUser);
         // $invitation = ProjectInvitation::where('id', $id)->first();

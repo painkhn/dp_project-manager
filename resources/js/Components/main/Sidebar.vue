@@ -48,7 +48,7 @@ const invitesToggle = async () => {
                             <Link :href="route('project.create')" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Создать проект</Link>
                         </li>
                         <li>
-                            <button type="button" @click="invitesToggle" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Приглашения</button>
+                            <Link :href="route('teams.list', { id: $page.props.auth.user.id })" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-white/10">Команды</Link>
                         </li>
                     </ul>
                 </li>

@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(ProjectUser::class);
     }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 }

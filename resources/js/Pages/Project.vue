@@ -71,7 +71,7 @@ const sidebarToggle = () => {
 
     <main>
         <Alert class="alert-deleted opacity-0 transition-all" :value="'Удалено'" />
-        <div class="max-w-4xl mx-auto p-5 my-20 bg-white/10 rounded-xl flex">
+        <div class="max-w-4xl mx-auto p-5 my-20 bg-white/10 rounded-xl flex gap-5">
             <div class="w-1/2">
                     <h1 class="text-white font-bold text-2xl mb-5">
                     {{ props.project.title }}
@@ -107,7 +107,7 @@ const sidebarToggle = () => {
                     Удалённые пользователи
                 </h2>
                 <ul>
-                    <li>
+                    <li v-for="(user, index) in props.projectUsers" :key="index">
                         asdasd
                     </li>
                 </ul>
