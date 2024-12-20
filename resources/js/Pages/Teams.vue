@@ -24,8 +24,7 @@ onMounted(() => {
 <template>
     <Head title="Список команд" />
     
-    <div>
-        <Link :href="route('team.create')" class="text-white">Создать команду</Link>
+    <div class="max-w-4xl w-full mx-auto my-20 bg-white/10 rounded-md p-5">
         <ul>
             <li v-for="(team, index) in props.teams" :key="team.id" class="text-white">
                 <p>
@@ -33,6 +32,11 @@ onMounted(() => {
                 </p>
             </li>
         </ul>
+        <Link :href="route('team.create')" class="text-white mt-5 block">
+            <button type="button" class="w-full py-2 bg-transparent transition-all border border-white rounded-md hover:bg-white/10">
+                Создать команду
+            </button>
+        </Link>
     </div>
 
     <button @click="sidebarToggle" class="absolute bottom-10 left-10 text-white font-bold z-10">
