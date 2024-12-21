@@ -25,6 +25,14 @@ export interface ProjectInvitation {
     status: string;
 }
 
+export interface TeamInvitation {
+    id: number;
+    team: Team;
+    inviter: User;
+    invitee: User | null;
+    status: string;
+}
+
 export interface ProjectUser {
     id: number;
     project: Project;

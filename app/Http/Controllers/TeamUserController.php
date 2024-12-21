@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TeamUser;
+use App\Models\{ TeamUser, Team, TeamInvitation };
 use App\Http\Requests\StoreTeamUserRequest;
 use App\Http\Requests\UpdateTeamUserRequest;
+use Illuminate\Support\Facades\Auth;
 
 class TeamUserController extends Controller
 {
@@ -27,9 +28,22 @@ class TeamUserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTeamUserRequest $request)
+    public function store(StoreTeamUserRequest $request, $teamId)
     {
-        //
+        $team = Team::findOrFail($teamId);
+        $user = Auth::user();
+        $invitation = TeamInvitation::where('invitee_id', $user->id)->where('team_id', $teamId)->where('status', 'pending')->first();
+        if ($invitation) {
+            TeamUser::create([
+                'team_id' => $teamId,
+                'user_id' => $user->id
+            ]);
+            $invitation->update([
+                'status' => 'accepted'
+            ]);
+            return response()->json(['message' => 'User accepted the invitation and joined the team.']);
+        }
+        return redirect()->back();
     }
 
     /**

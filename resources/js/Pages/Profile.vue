@@ -5,7 +5,7 @@ import { initFlowbite } from 'flowbite';
 import Header from '@/Components/main/Header.vue';
 import Sidebar from '@/Components/main/Sidebar.vue';
 import AvatarChangeForm from '@/Components/profile/AvatarChangeForm.vue';
-import { Project, User, ProjectInvitation } from '@/types'
+import { Project, User, ProjectInvitation, TeamInvitation } from '@/types'
 import axios from 'axios';
 
 const props = defineProps<{
@@ -13,7 +13,8 @@ const props = defineProps<{
     canRegister?: boolean;
     projects?: Project[];
     user: User;
-    invitations?: ProjectInvitation[];
+    projectInvitations?: ProjectInvitation[];
+    teamInvitations?: TeamInvitation[];
 }>();
 
 onMounted(() => {
@@ -124,8 +125,8 @@ const rejectInvitation = async (invitationId: number) => {
                 <h2 class="font-bold text-white text-xl mb-5">
                     ВАШИ ПРИГЛАШЕНИЯ
                 </h2>
-                <ul class="flex flex-col gap-2 py-2 rounded-md bg-white/10 px-4" v-if="(props.invitations as ProjectInvitation[])?.length > 0 && (props.invitations as ProjectInvitation[]).some(invitation => invitation.status === 'pending')">
-                    <li v-for="invitation in (props.invitations as ProjectInvitation[])" :key="invitation.id" class="flex items-center pr-4">
+                <ul class="flex flex-col gap-2 py-2 rounded-md bg-white/10 px-4" v-if="(props.projectInvitations as ProjectInvitation[])?.length > 0 && (props.projectInvitations as ProjectInvitation[]).some(invitation => invitation.status === 'pending') || (props.teamInvitations as TeamInvitation[])?.length > 0 && (props.teamInvitations as TeamInvitation[]).some(invitation => invitation.status === 'pending')">
+                    <li v-for="invitation in (props.projectInvitations as ProjectInvitation[])" :key="invitation.id" class="flex items-center pr-4">
                         <div class="flex justify-between w-full items-center">
                             <div>
                                 <Link :href="route('project.index', { id: invitation.project.id })">
@@ -139,6 +140,28 @@ const rejectInvitation = async (invitationId: number) => {
                             </div>
                             <div class="flex items-center gap-3">
                                 <button @click="newUserProject(invitation.project.id)" class="ml-auto text-green-500">
+                                    Принять
+                                </button>
+                                <button @click="rejectInvitation(invitation.id)" class="text-red-500">
+                                    Отклонить
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                    <li v-for="invitation in (props.teamInvitations as TeamInvitation[])" :key="invitation.id" class="flex items-center pr-4">
+                        <div class="flex justify-between w-full items-center">
+                            <div>
+                                <Link :href="route('team.page', { id: invitation.team.id })">
+                                    <p class="text-white font-semibold">
+                                        {{ invitation.team.title }}
+                                    </p>
+                                </Link>
+                                <p class="text-white/90">
+                                    Приглашение от <Link :href="route('profile.index', { id: invitation.inviter.id })">{{ invitation.inviter.name }}</Link>
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button @click="newUserProject(invitation.team.id)" class="ml-auto text-green-500">
                                     Принять
                                 </button>
                                 <button @click="rejectInvitation(invitation.id)" class="text-red-500">

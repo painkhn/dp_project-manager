@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
-use App\Models\{ User, Project, ProjectInvitation };
+use App\Models\{ User, Project, ProjectInvitation, TeamInvitation };
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,9 +16,14 @@ class ProfileController extends Controller
 {
     public function index($id)
     {
-        $invitations = ProjectInvitation::where('invitee_id', $id)
+        $projectInvitations = ProjectInvitation::where('invitee_id', $id)
             ->where('status', 'pending')
             ->with('project', 'inviter')
+            ->get();
+
+        $teamInvitations = TeamInvitation::where('invitee_id', $id)
+            ->where('status', 'pending')
+            ->with('team', 'inviter')
             ->get();
         // dd($invitations);
         $user = User::where('id', $id)->with('project')->first();
@@ -27,7 +32,8 @@ class ProfileController extends Controller
             // 'user_id' => Auth::id(),
             'user' => $user,
             'projects' => Project::where('user_id', $user->id)->with('user')->get(),
-            'invitations' => $invitations
+            'projectInvitations' => $projectInvitations,
+            'teamInvitations' => $teamInvitations,
         ]);
     }
 

@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\{ ProfileController, ProjectController, ProjectInvitationController, UserController, ProjectUserController, TeamController, TeamInvitationController };
+use App\Http\Controllers\{ ProfileController, ProjectController, ProjectInvitationController, UserController, ProjectUserController, TeamController, TeamInvitationController, TeamUser };
+use App\Http\Controllers\TeamUserController;
 use App\Models\TeamInvitation;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,9 @@ Route::middleware('auth')->group(function () {
     });
     Route::controller(TeamInvitationController::class)->group(function() {
         Route::post('/team/{teamId}/invite', 'invite')->name('team.invite');
+    });
+    Route::controller(TeamUserController::class)->group(function() {
+        Route::post('/team/user');
     });
 });
 
