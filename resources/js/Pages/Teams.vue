@@ -28,14 +28,11 @@ onMounted(() => {
         <ul v-if="(props.teams as Teams[])?.length > 0">
             <li>
                 <h2 class="text-white text-xl font-bold mb-5">
-                    Ваши команды
+                    Ваша команда
                 </h2>
             </li>
-            <ul class="grid grid-cols-2 gap-5">
+            <ul>
                 <li v-for="(team, index) in props.teams" :key="team.id" class="text-white">
-                    <!-- <p>
-                        {{ team.title }}
-                    </p> -->
                     <Link :href="route('team.page', { id: team.id })">
                         <div class="w-full py-2 bg-white/10 px-4 rounded-md transition-all hover:bg-white/15">
                             {{ team.title }}

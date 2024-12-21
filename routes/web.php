@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\{ ProfileController, ProjectController, ProjectInvitationController, UserController, ProjectUserController, TeamController };
+use App\Http\Controllers\{ ProfileController, ProjectController, ProjectInvitationController, UserController, ProjectUserController, TeamController, TeamInvitationController };
+use App\Models\TeamInvitation;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -49,6 +50,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/team/store', 'store')->name('team.store');
         Route::get('/team/{id}', 'show')->name('team.page');
         Route::delete('team/{id}/delete', 'destroy')->name('team.delete');
+    });
+    Route::controller(TeamInvitationController::class)->group(function() {
+        Route::post('/team/{teamId}/invite', 'invite')->name('team.invite');
     });
 });
 

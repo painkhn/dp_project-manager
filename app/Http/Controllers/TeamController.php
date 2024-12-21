@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{ Team, User };
+use App\Models\{ Team, User, TeamUser };
 use App\Http\Requests\StoreTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
 use Inertia\Inertia;
@@ -66,15 +66,21 @@ class TeamController extends Controller
     public function show($id)
     {
         $user = Auth::user();
-        $team = Team::with('users')->where('id', $id)->first();
+        $team = Team::with('teamUsers')->where('id', $id)->first();
         $owner = User::where('team_id', $id)->first();
         // dd($team);
-        $teamUsers = Team::with('owner')->where('team_id', $id);
+        $teamUsers = TeamUser::with('user')->where('team_id', $id)->get();
         return Inertia::render('Team/TeamPage', [
             'team' => $team,
             'user' => $user,
-            'owner' => $owner
+            'owner' => $owner,
+            'teamUsers' => $teamUsers
         ]);
+    }
+
+    public function invite()
+    {
+        
     }
 
     /**

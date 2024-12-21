@@ -21,8 +21,23 @@ class Team extends Model
         return $this->hasOne(User::class, 'owner_id');
     }
 
-    public function users()
+    // public function users()
+    // {
+    //     return $this->belongsToMany(User::class, 'team_user');
+    // }
+
+    public function teamUsers()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(TeamUser::class);
+    }
+
+    public function projectUser()
+    {
+        return $this->belongsTo(ProjectUser::class);
+    }
+
+    public function invitations()
+    {
+        return $this->hasMany(TeamInvitation::class);
     }
 }

@@ -27,4 +27,9 @@ class ProjectUser extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function teams()
+    {
+        return $this->hasMany(Team::class);
+    }
 }

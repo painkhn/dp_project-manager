@@ -2,6 +2,7 @@
 import { defineProps, onMounted } from 'vue';
 import { User, Team } from '@/types'
 import { Link, Head } from '@inertiajs/vue3';
+import InviteToTeam from '@/Components/teams/InviteToTeam.vue';
 
 const props = defineProps<{
     user: User;
@@ -33,12 +34,16 @@ onMounted(() => {
         <h2 class="text-white text-lg font-semibold mb-5">
             Пользователи команды:
         </h2>
-        <ul class="w-full flex flex-col">
+        <ul class="w-full flex flex-col mb-5">
             <li v-for="(user, index) in props.team.users" :key="index" class="w-full flex">
                 <Link :href="route('profile.index', { id: props.owner.id })" class="text-lg rounded-md transition-all text-white px-4 py-2 bg-white/10 hover:bg-white/15 w-full">
                     {{ user.name }}
                 </Link>
             </li>
         </ul>
+        <h2 class="text-white text=lg font-semibold mb-5">
+            Пригласить пользователей
+        </h2>
+        <InviteToTeam :teamId="props.team.id" />
     </div>
 </template>
