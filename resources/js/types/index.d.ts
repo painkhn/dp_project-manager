@@ -52,7 +52,7 @@ export interface Team {
     title: string;
     description: string;
     user_id: number;
-    owner: User;
+    // owner: User;
     users: User[] | null;
 }
 

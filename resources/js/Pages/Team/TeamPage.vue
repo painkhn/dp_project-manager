@@ -7,12 +7,10 @@ import InviteToTeam from '@/Components/teams/InviteToTeam.vue';
 const props = defineProps<{
     user: User;
     team: Team
-    owner: User;
 }>()
 
 onMounted(() => {
     console.log(props.team);
-    
 })
 </script>
 
@@ -27,18 +25,20 @@ onMounted(() => {
             {{ props.team.description }}
         </p>
         <div class="text-center">
-            <Link :href="route('profile.index', { id: props.owner.id })" class="text-center text-white/90 inline">
-                {{ props.owner.name }}
-            </Link>
+            <!-- <Link :href="route('profile.index', { id: props.team.user_id })" class="text-center text-white/90 inline">
+                aawe
+            </Link> -->
+            создатель
         </div>
         <h2 class="text-white text-lg font-semibold mb-5">
             Пользователи команды:
         </h2>
         <ul class="w-full flex flex-col mb-5">
             <li v-for="(user, index) in props.team.users" :key="index" class="w-full flex">
-                <Link :href="route('profile.index', { id: props.owner.id })" class="text-lg rounded-md transition-all text-white px-4 py-2 bg-white/10 hover:bg-white/15 w-full">
+                <!-- <Link :href="route('profile.index', { id: props.user.id })" class="text-lg rounded-md transition-all text-white px-4 py-2 bg-white/10 hover:bg-white/15 w-full">
                     {{ user.name }}
-                </Link>
+                </Link> -->
+                челик
             </li>
         </ul>
         <h2 class="text-white text=lg font-semibold mb-5">

@@ -53,9 +53,6 @@ class TeamController extends Controller
         ]);
 
         $user = Auth::user();
-        $user->update([
-            'team_id' => $team->id,
-        ]);
 
         return redirect()->back();
     }
@@ -67,13 +64,13 @@ class TeamController extends Controller
     {
         $user = Auth::user();
         $team = Team::with('teamUsers')->where('id', $id)->first();
-        $owner = User::where('team_id', $id)->first();
+        // $owner = User::where('team_id', $id)->first();
         // dd($team);
         $teamUsers = TeamUser::with('user')->where('team_id', $id)->get();
         return Inertia::render('Team/TeamPage', [
             'team' => $team,
             'user' => $user,
-            'owner' => $owner,
+            // 'owner' => $owner,
             'teamUsers' => $teamUsers
         ]);
     }
