@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/team/{teamId}/invite', 'invite')->name('team.invite');
     });
     Route::controller(TeamUserController::class)->group(function() {
-        Route::post('/team/user');
+        Route::post('/team/user/{id}/store', 'store')->name('team.user.store');
     });
 });
 

@@ -34,6 +34,17 @@ const newUserProject = async (projectId: number) => {
     }
 }
 
+const newUserTeam = async (teamId: number) => {
+    try {
+        const response = await axios.post(route('team.user.store', { id: teamId }))
+        console.log('успешно');
+        location.reload()
+    } catch (error) {
+        console.log('ошибка при принятии приглашения в команду: ', error);
+        
+    }
+}
+
 const sidebarToggle = () => {
     isSidebarVisible.value = !isSidebarVisible.value;
 };
@@ -161,7 +172,7 @@ const rejectInvitation = async (invitationId: number) => {
                                 </p>
                             </div>
                             <div class="flex items-center gap-3">
-                                <button @click="newUserProject(invitation.team.id)" class="ml-auto text-green-500">
+                                <button @click="newUserTeam(invitation.team.id)" class="ml-auto text-green-500">
                                     Принять
                                 </button>
                                 <button @click="rejectInvitation(invitation.id)" class="text-red-500">
