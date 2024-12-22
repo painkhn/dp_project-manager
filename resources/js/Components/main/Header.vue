@@ -31,7 +31,7 @@
                 </svg>
             </button>
         
-            <div v-if="isSidebarVisible" @click="sidebarToggle" class="fixed top-0 left-0 w-full h-full bg-black/40 z-[39]">
+            <div v-if="isSidebarVisible" @click="sidebarToggle" class="fixed top-0 left-0 w-full h-full bg-black/40 z-[39] backdrop-blur-[1px]">
             </div>
             <Sidebar :isVisible="isSidebarVisible" @toggle="sidebarToggle" />
         </div>
