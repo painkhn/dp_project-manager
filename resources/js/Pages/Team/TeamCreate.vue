@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import Header from '@/Components/main/Header.vue';
 
 // const createTeam = async (userId: number) => {
 //     const response = await axios.post(route('team.store'), {
@@ -30,7 +31,9 @@ const handleSubmit = () => {
 </script>
 
 <template>
-    <div class="max-w-xl w-full mx-auto my-10 p-5 rounded-md bg-white/10 text-white">
+    <Header />
+
+    <div class="max-w-xl w-full mx-auto my-0 p-5 rounded-md bg-white/10 text-white">
         <form @submit.prevent="handleSubmit" class="flex flex-col gap-5">
             <div class="flex flex-col gap-2">
                 <label for="">Название проекта</label>

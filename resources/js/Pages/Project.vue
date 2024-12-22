@@ -49,9 +49,6 @@ const fetchInvitedUsers = async (projectId: number) => {
     }
 }
 
-// const invitationId = (props.invitation as ProjectInvitation[]).id
-// const invitationId = (props.invitation as ProjectInvitation) ? (props.invitation as ProjectInvitation).id : null
-
 onMounted(() => {
     initFlowbite();
     const projectId = props.project.id;
@@ -69,9 +66,11 @@ const sidebarToggle = () => {
 <template>
     <Head :title="props.project.title" />
 
+    <Header />
+
     <main>
         <Alert class="alert-deleted opacity-0 transition-all" :value="'Удалено'" />
-        <div class="max-w-4xl mx-auto p-5 my-20 bg-white/10 rounded-xl flex gap-5">
+        <div class="max-w-4xl mx-auto p-5 my-0 bg-white/10 rounded-xl flex gap-5">
             <div class="w-1/2">
                     <h1 class="text-white font-bold text-2xl mb-5">
                     {{ props.project.title }}
@@ -105,16 +104,4 @@ const sidebarToggle = () => {
             </div>
         </div>
     </main>
-
-    <button @click="sidebarToggle" class="absolute bottom-10 left-10 text-white font-bold z-10">
-        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-            width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="m9 5 7 7-7 7" />
-        </svg>
-    </button>
-
-    <div v-if="isSidebarVisible" @click="sidebarToggle" class="fixed top-0 left-0 w-full h-full bg-black/40 z-[39]">
-    </div>
-    <Sidebar :isVisible="isSidebarVisible" @toggle="sidebarToggle" />
 </template>

@@ -16,7 +16,7 @@
         @vite(['resources/js/app.ts', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
     </head>
-    <body class="font-sans antialiased dark bg-black/95">
+    <body class="font-sans antialiased dark bg-black/95 min-h-screen">
         @inertia
 
         <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
