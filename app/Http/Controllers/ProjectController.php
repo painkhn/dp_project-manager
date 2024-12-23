@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{ Project, ProjectInvitation, ProjectUser };
+use App\Models\{ Project, ProjectInvitation, ProjectUser, Task };
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -22,6 +22,7 @@ class ProjectController extends Controller
         $project = Project::with('user')->with('invitations', 'invitations.invitee')->where('id', $id)->findOrFail($id);
         $pendingInvitations = ProjectInvitation::where('project_id', $id)->where('status', 'pending')->with('invitee')->get();
         $projectUser = ProjectUser::with('user')->where('project_id', $id)->get();
+        $tasks = Task::with('user')->where('project_id', $id)->get();
         // $deletedUser = ProjectUser::with('user')->where('project_id', $id)->whereNotNull('deleted_at')->get();
         // dd($projectUser->toArray());
         // dd($projectUser);
@@ -33,6 +34,7 @@ class ProjectController extends Controller
             'invitations' => $project->invitations,
             'pendingInvitations' => $pendingInvitations,
             'projectUsers' => $projectUser,
+            'tasks' => $tasks
         ]);
     }
 

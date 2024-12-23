@@ -62,6 +62,17 @@ export interface TeamUsers {
     user: User;
 }
 
+export interface Tasks {
+    id: number;
+    title: string;
+    description: string;
+    project_id: number;
+    user_id: number;
+    status: string;
+    start_date: string;
+    end_date: string;
+}
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> =
     T & {
         auth: {

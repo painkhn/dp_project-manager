@@ -3,6 +3,7 @@
     import axios from 'axios';
     import { ProjectInvitation, Project } from '@/types'
     import Alert from '@/Components/messages/Alert.vue';
+    import { Link } from '@inertiajs/vue3';
 
 
     const props = defineProps<{

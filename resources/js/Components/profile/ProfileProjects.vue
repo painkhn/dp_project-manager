@@ -36,10 +36,10 @@
         </ul>
         <ul v-else>
             <h2 class="text-xl text-white text-center" v-if="$page.props.auth.user.id == ($page.props.user as User).id">
-                Вы пока не создали ни одной темы
+                Вы пока не создали ни одного проекта
             </h2>
             <h2 class="text-xl text-white text-center" v-else>
-                Пользователь {{ ($page.props.user as User).name }} пока не создал ни одной темы
+                Пользователь {{ ($page.props.user as User).name }} пока не создал ни одного проекта
             </h2>
         </ul>
     </div>

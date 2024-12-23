@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{ ProfileController, ProjectController, ProjectInvitationController, UserController, ProjectUserController, TeamController, TeamInvitationController, TeamUser };
+use App\Http\Controllers\{ ProfileController, ProjectController, ProjectInvitationController, UserController, ProjectUserController, TeamController, TeamInvitationController, TeamUser, TaskController };
 use App\Http\Controllers\TeamUserController;
 use App\Models\TeamInvitation;
 use Illuminate\Foundation\Application;
@@ -57,6 +57,9 @@ Route::middleware('auth')->group(function () {
     });
     Route::controller(TeamUserController::class)->group(function() {
         Route::post('/team/user/{id}/store', 'store')->name('team.user.store');
+    });
+    Route::controller(TaskController::class)->group(function() {
+        Route::post('/project/{id}/task/store', 'store')->name('task.store');
     });
 });
 
