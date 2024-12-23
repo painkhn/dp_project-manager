@@ -73,6 +73,6 @@ const sendInvitation = async () => {
             </ul>
         </div>
         <button :disabled="!selectedUser" @click="sendInvitation"
-            class="w-full border-2 py-2 border-white text-white disabled:opacity-50">Отправить приглашение</button>
+            class="w-full border py-2 border-white text-white disabled:opacity-50 rounded-md">Отправить приглашение</button>
     </div>
 </template>

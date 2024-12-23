@@ -37,7 +37,7 @@
     <div>
         <ul class="mb-5 flex flex-col gap-2" v-if="(props.projectUsers as ProjectUser[])?.length > 0">
             <li v-for="(user, index) in props.projectUsers" :key="index">
-                <div class="px-4 py-2 bg-white/10 rounded-md transition-all hover:bg-white/20 flex justify-between">
+                <div class="px-4 py-2 transition-all hover:bg-white/20 flex justify-between border-l-2 border-white">
                     <Link :href="route('profile.index', { id: user.user.id })" class="text-white text-lg hover:underline rounded-md transition-all">
                         {{ user.user.name }}
                     </Link>

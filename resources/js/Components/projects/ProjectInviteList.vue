@@ -33,10 +33,10 @@
 </script>
 
 <template>
-    <ul class="flex flex-col gap-2 py-2 rounded-b-md bg-white/10" v-if="props.pendingInvitations && props.pendingInvitations.length > 0">
-        <li v-for="invitation in props.pendingInvitations" :key="invitation.id" class="flex items-center pr-4">
+    <ul class="flex flex-col gap-2 py-2 rounded-b-md" v-if="props.pendingInvitations && props.pendingInvitations.length > 0">
+        <li v-for="invitation in props.pendingInvitations" :key="invitation.id" class="flex items-center pr-4 border-l-2 border-white hover:bg-white/10 transition-all">
             <Link :href="route('profile.index', { id: invitation.invitee?.id })"
-                class="text-white font-semibold w-full h-full block px-4 py-2 hover:bg-white/10 rounded-b-md">
+                class="text-white font-semibold w-full h-full block px-4 py-2">
                 {{ invitation.invitee?.name }}
             </Link>
             <button @click="deleteInvitation(invitation.id)" v-if="$page.props.auth.user.id == props.project.user.id">
