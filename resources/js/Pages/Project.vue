@@ -70,32 +70,36 @@ const sidebarToggle = () => {
 
     <main>
         <Alert class="alert-deleted opacity-0 transition-all" :value="'Удалено'" />
-        <div class="max-w-4xl mx-auto p-5 my-0 bg-white/10 rounded-xl flex gap-5">
-            <div class="w-1/2">
-                    <h1 class="text-white font-bold text-2xl mb-5">
+        <div class="w-full mx-auto p-5 my-0 rounded-xl flex gap-5">
+            <div class="w-2/3">
+                    <h1 class="text-white font-bold text-4xl mb-5">
                     {{ props.project.title }}
                 </h1>
-                <p class="text-white/90 font-semibold mb-5">
+                <p class="text-white/90 font-semibold text-2xl mb-5">
                     {{ props.project.description }}
                 </p>
-                <p class="text-white/80 mb-5 flex items-center gap-3">
+                <p class="text-white/80 mb-5 flex items-center text-2xl gap-3">
                     {{ props.project.start_date }}
                     <span>-</span>
                     {{ props.project.end_date }}
                 </p>
-                <Link :href="route('profile.index', { id: props.project.user.id })" class="text-white/80 mb-5">
+                <Link :href="route('profile.index', { id: props.project.user.id })" class="text-white text-2xl mb-5 uppercase transition-all hover:text-white/80 font-bold">
                     {{ props.project.user.name }}
                 </Link>
 
+                                
+            </div>
+            <div class="w-1/3 text-white border-l border-white/50 pl-5">
+                <h2 class="text-white text-xl font-bold mb-5">
+                    Пригласить пользователя
+                </h2>
                 <ProjectInvite :projectId="props.project.id" @fetch-invited-users="fetchInvitedUsers" class="mb-5" v-if="$page.props.auth.user.id == props.project.user.id" />
                 
-                <h2 class="text-white text-xl my-4 font-bold">
+                <h2 class="text-white text-xl my-4 font-bold block mb-5">
                     Приглашены:
                 </h2>
 
-                <ProjectInviteList :pendingInvitations="props.pendingInvitations" :project="props.project" />
-            </div>
-            <div class="w-1/2 text-white">
+                <ProjectInviteList :pendingInvitations="props.pendingInvitations" :project="props.project" class="mb-5" />
                 <h2 class="font-bold text-xl mb-4">
                     Пользователи проекта
                 </h2>

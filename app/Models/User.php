@@ -77,4 +77,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(TeamUser::class);
     }
+
+    public function task()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function report()
+    {
+        return $this->hasMany(Report::class);
+    }
 }
