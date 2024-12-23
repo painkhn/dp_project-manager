@@ -68,6 +68,7 @@ export interface Tasks {
     description: string;
     project_id: number;
     user_id: number;
+    user: User;
     status: string;
     start_date: string;
     end_date: string;

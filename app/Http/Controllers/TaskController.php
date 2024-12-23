@@ -74,8 +74,14 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroy($id)
     {
-        //
+        $task = Task::findOrFail($id);
+
+        if ($task) {
+            $task->delete();
+            return response()->json(['message' => 'Задача удалена']);
+        }
+        return response()->json(['message' => 'Задача не найдена']);
     }
 }

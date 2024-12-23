@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::controller(TaskController::class)->group(function() {
         Route::post('/project/{id}/task/store', 'store')->name('task.store');
+        Route::delete('/project/{id}/task/destroy', 'destroy')->name('task.destroy');
     });
 });
 

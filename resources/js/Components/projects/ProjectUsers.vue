@@ -41,7 +41,7 @@
                     <Link :href="route('profile.index', { id: user.user.id })" class="text-white text-lg hover:underline rounded-md transition-all">
                         {{ user.user.name }}
                     </Link>
-                    <button @click="projectUserDelete(user.user.id)" class="transition-all hover:ring-1 hover:ring-white px-2 rounded-md">
+                    <button @click="projectUserDelete(user.user.id)" class="transition-all hover:ring-1 hover:ring-white px-2 rounded-md" v-if="$page.props.auth.user.id == props.project.user.id">
                         Удалить из проекта
                     </button>
                 </div>
