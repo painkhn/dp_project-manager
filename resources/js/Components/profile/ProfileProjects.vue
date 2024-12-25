@@ -23,7 +23,7 @@
             </li>
             <li v-for="project in props.projects" :key="project.id">
                 <Link :href="route('project.index', { id: project.id })">
-                <div class="w-full h-auto px-4 py-2 bg-white/10 rounded-md transition-all hover:bg-white/20">
+                <div class="w-full h-auto px-4 py-2 transition-all hover:bg-white/10 border-l-4 border-white">
                     <h3 class="text-white font-bold text-2xl uppercase">
                         {{ project.title }}
                     </h3>
