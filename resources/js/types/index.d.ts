@@ -12,6 +12,8 @@ export interface Project {
     start_date: Date;
     end_date: Date;
     user: User;
+    report: Report | null;
+    task: Tasks | null;
     // projectUsers: ProjectUser[] | null;
     // invitation: ProjectInvitation | null;
 }

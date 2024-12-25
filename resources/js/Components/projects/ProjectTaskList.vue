@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { Project, Tasks, Report } from '@/types';
+import { Project, Tasks } from '@/types';
 import axios from 'axios';
-import { defineProps, handleError, ref } from 'vue';
+import { ref } from 'vue';
 import { format } from 'date-fns';
-import { useForm } from '@inertiajs/vue3';
 import TaskReportForm from '../tasks/TaskReportForm.vue';
 import TaskReportList from '../tasks/TaskReportList.vue';
 
@@ -15,26 +14,18 @@ const props = defineProps<{
 const taskDelete = async (taskId: number) => {
     try {
         await axios.delete(route('task.destroy', { id: taskId }));
-        location.reload(); // Перезагрузка страницы
+        location.reload();
     } catch (error) {
         console.error('Ошибка при удалении задачи:', error);
     }
 };
 
-// Создаем массив флагов для каждой задачи
 const isTaskDetailsVisible = ref<boolean>(false);
 const isTaskReportVisible = ref<boolean>(false);
 const btn_id = ref<number>();
 
-// Функция для переключения видимости деталей задачи
 const taskDetailsToggle = (taskId: number) => {
-    // isTaskDetailsVisible.value = isTaskDetailsVisible.value.map((visible, i) => 
-    //     i === index ? !visible : visible
-    // );
     btn_id.value = taskId;
-    // console.log(btn_id.value);
-    
-    // isTaskDetailsVisible.value = !isTaskDetailsVisible.value
 }
 
 const closeDetails = (taskId: number) => {
@@ -42,22 +33,13 @@ const closeDetails = (taskId: number) => {
 }
 
 const taskReportToggle = () => {
-    // isTaskReportVisible.value = isTaskReportVisible.value.map((visible, i) => 
-    //     i === index ? !visible : visible
-    // );
-    // isTaskReportVisible.value = !isTaskReportVisible.value
+    isTaskReportVisible.value = !isTaskReportVisible.value;
 }
 
-// Инициализируем массив флагов в зависимости от количества задач
-// if (props.tasks) {
-//     isTaskDetailsVisible.value = new Array(props.tasks.length).fill(false);
-// }
-
 const formatDate = (dateString: string) => {
-    const date = new Date(dateString); // Преобразуем строку в объект Date
-    return format(date, 'dd.MM.yyyy'); // Возвращаем дату в формате "дд.мм.гггг"
+    const date = new Date(dateString);
+    return format(date, 'dd.MM.yyyy');
 };
-
 </script>
 
 <template>
@@ -82,7 +64,7 @@ const formatDate = (dateString: string) => {
                         <p class="text-white text-xl ml-auto">
                             {{ task.user.name }}
                         </p>
-                        <button @click="taskDelete(task.id)" class="text-white ml-5">
+                        <button @click="taskDelete(task.id)" class="text-white ml-5" v-if="$page.props.auth.user.id === props.project.user.id">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
                             </svg>                                      

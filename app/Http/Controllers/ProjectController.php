@@ -17,32 +17,32 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($id)
-    {
-        $project = Project::with('user', 'task.report')->with('invitations', 'invitations.invitee')->where('id', $id)->findOrFail($id);
-        $pendingInvitations = ProjectInvitation::where('project_id', $id)->where('status', 'pending')->with('invitee')->get();
-        $projectUser = ProjectUser::with('user')->where('project_id', $id)->get();
-        $tasks = Task::with('user')->where('project_id', $id)->get();
-        $task = Task::where('project_id', $id)->first();
-        dd($project);
-        // dd($task->id);
-        // $reports = Report::where('task_id', $task->id)->get();
-        // dd($reports);
-        // $deletedUser = ProjectUser::with('user')->where('project_id', $id)->whereNotNull('deleted_at')->get();
-        // dd($projectUser->toArray());
-        // dd($projectUser);
-        // dd($projectUser);
-        // $invitation = ProjectInvitation::where('id', $id)->first();
-        // dd($project->user);
-        return Inertia::render('Project', [
-            'project' => $project,
-            'invitations' => $project->invitations,
-            'pendingInvitations' => $pendingInvitations,
-            'projectUsers' => $projectUser,
-            'tasks' => $tasks,
-            // 'reports' => $reports
-        ]);
-    }
+        public function index($id)
+        {
+            $project = Project::with('user', 'task.report')->with('invitations', 'invitations.invitee')->where('id', $id)->findOrFail($id);
+            $pendingInvitations = ProjectInvitation::where('project_id', $id)->where('status', 'pending')->with('invitee')->get();
+            $projectUser = ProjectUser::with('user')->where('project_id', $id)->get();
+            $tasks = Task::with('user', 'report')->where('project_id', $id)->get();
+            $task = Task::where('project_id', $id)->first();
+            // dd($project);
+            // dd($task->id);
+            // $reports = Report::where('task_id', $task->id)->get();
+            // dd($reports);
+            // $deletedUser = ProjectUser::with('user')->where('project_id', $id)->whereNotNull('deleted_at')->get();
+            // dd($projectUser->toArray());
+            // dd($projectUser);
+            // dd($projectUser);
+            // $invitation = ProjectInvitation::where('id', $id)->first();
+            // dd($project->user);
+            return Inertia::render('Project', [
+                'project' => $project,
+                'invitations' => $project->invitations,
+                'pendingInvitations' => $pendingInvitations,
+                'projectUsers' => $projectUser,
+                'tasks' => $tasks,
+                // 'reports' => $reports
+            ]);
+        }
 
     public function create_index()
     {

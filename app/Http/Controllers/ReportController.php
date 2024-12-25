@@ -43,6 +43,14 @@ class ReportController extends Controller
         ]);
     }
 
+    public function back($reportId)
+    {
+        $report = Report::findOrFail($reportId);
+        $report->update([
+            'status' => 'waiting'
+        ]);
+    }
+
     /**
      * Display the specified resource.
      */
