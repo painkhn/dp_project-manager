@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Report;
+use App\Models\{ Report, Task };
 use App\Http\Requests\StoreReportRequest;
 use App\Http\Requests\UpdateReportRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
@@ -27,9 +28,16 @@ class ReportController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreReportRequest $request)
+    public function store(StoreReportRequest $request, $taskId)
     {
-        //
+        dd($request);
+        $task = Task::where('id', $taskId)->first();
+        Report::create([
+            'message' => $request->message,
+            'file' => $request->file,
+            'user_id' => Auth::id(),
+            'task_id' => $task->id
+        ]);
     }
 
     /**

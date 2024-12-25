@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Project, Tasks } from '@/types';
 import axios from 'axios';
-import { defineProps, ref } from 'vue';
+import { defineProps, handleError, ref } from 'vue';
 import { format } from 'date-fns';
+import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps<{
     tasks: Tasks[] | null;
@@ -36,6 +37,23 @@ if (props.tasks) {
 const formatDate = (dateString: string) => {
     const date = new Date(dateString); // Преобразуем строку в объект Date
     return format(date, 'dd.MM.yyyy'); // Возвращаем дату в формате "дд.мм.гггг"
+};
+
+const form = useForm({
+    message: '',
+    file: '',
+});
+
+const handleSubmit = (taskId: number) => {
+
+    form.post(route('report.store', {taskId: taskId}), {
+        onSuccess: () => {
+            form.reset();
+        },
+        onError: (errors) => {
+            console.error(errors);
+        },
+    });
 };
 </script>
 
@@ -96,6 +114,12 @@ const formatDate = (dateString: string) => {
                         <button class="text-white px-4 py-2 border border-white rounded-md transition-all hover:bg-white/10">
                             Отправить отчёт
                         </button>
+                        <!-- <form @submit.prevent="handleSubmit(task.id)">
+                            <input type="text" v-model="form.message">
+                            <button type="submit">
+                                фывафыв
+                            </button>
+                        </form> -->
                     </div>
                 </div>
             </li>

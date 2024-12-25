@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\{ ProfileController, ProjectController, ProjectInvitationController, UserController, ProjectUserController, TeamController, TeamInvitationController, TeamUser, TaskController };
-use App\Http\Controllers\TeamUserController;
+use App\Http\Controllers\{ ProfileController, ProjectController, ProjectInvitationController, UserController, ProjectUserController, TeamController, TeamInvitationController, TeamUser, TaskController, TeamUserController, ReportController };
 use App\Models\TeamInvitation;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -61,6 +60,9 @@ Route::middleware('auth')->group(function () {
     Route::controller(TaskController::class)->group(function() {
         Route::post('/project/{id}/task/store', 'store')->name('task.store');
         Route::delete('/project/{id}/task/destroy', 'destroy')->name('task.destroy');
+    });
+    Route::controller(ReportController::class)->group(function() {
+        Route::post('/task/{taskId}/report/store', 'store')->name('report.store');
     });
 });
 
