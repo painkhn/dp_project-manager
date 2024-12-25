@@ -61,7 +61,7 @@ const handleSubmit = (taskId: number) => {
     <div v-if="(props.tasks as Tasks[])?.length > 0" class="my-5">
         <ul class="flex flex-col gap-5">
             <li v-for="(task, index) in props.tasks" :key="index">
-                <div class="w-full px-4 py-2 border-l-4 transition-all hover:bg-white/10 flex flex-col gap-5" v-if="task.user.id === props.project.user.id || $page.props.auth.user.id === props.project.user.id">
+                <div class="w-full px-4 py-2 border-l-4 transition-all hover:bg-white/10 flex flex-col gap-5" v-if="$page.props.auth.user.id === props.project.user.id || $page.props.auth.user.id === task.user_id">
                     <div class="flex items-center">
                         <p class="text-white text-xl">
                             {{ task.title }}
@@ -124,5 +124,10 @@ const handleSubmit = (taskId: number) => {
                 </div>
             </li>
         </ul>
+    </div>
+    <div v-else>
+        <p class="text-white/90 text-2xl text-center">
+            Не добавлено ни одной задачи
+        </p>
     </div>
 </template>

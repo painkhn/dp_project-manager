@@ -190,7 +190,7 @@ onUnmounted(() => {
                     {{ currentDateTime }}
                 </p>
                 <ProfileProjects :projects="(props.projects as Project[])" :user="(props.user as User)" v-if="isProjects" />
-                <ProjectTeams :teams="(props.teams as Teams[])" v-if="isTeams" />
+                <ProjectTeams :teams="(props.teams as Teams[])" v-if="isTeams" :user="(props.user as User)" />
             </div>
             <div class="max-w-xl w-full ml-auto h-auto px-10 text-center border-l border-white/50" v-if="$page.props.auth.user.id == ($page.props.user as User).id">
                 <h2 class="font-bold text-white text-xl mb-5">

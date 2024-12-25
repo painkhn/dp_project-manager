@@ -17,7 +17,7 @@
                 <h2 class="font-bold text-white text-xl" v-if="$page.props.auth.user.id == ($page.props.user as User).id">
                     ВАШИ ПРОЕКТЫ
                 </h2>
-                <h2 class="font-bold text-white text-xl" v-else>
+                <h2 class="font-bold text-white text-xl uppercase" v-else>
                     ПРОЕКТЫ ПОЛЬЗОВАТЕЛЯ {{ ($page.props.user as User).name }}
                 </h2>
             </li>
