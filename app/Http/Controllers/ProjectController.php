@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{ Project, ProjectInvitation, ProjectUser, Task };
+use App\Models\{ Project, ProjectInvitation, ProjectUser, Task, Report };
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -19,10 +19,15 @@ class ProjectController extends Controller
      */
     public function index($id)
     {
-        $project = Project::with('user')->with('invitations', 'invitations.invitee')->where('id', $id)->findOrFail($id);
+        $project = Project::with('user', 'task.report')->with('invitations', 'invitations.invitee')->where('id', $id)->findOrFail($id);
         $pendingInvitations = ProjectInvitation::where('project_id', $id)->where('status', 'pending')->with('invitee')->get();
         $projectUser = ProjectUser::with('user')->where('project_id', $id)->get();
         $tasks = Task::with('user')->where('project_id', $id)->get();
+        $task = Task::where('project_id', $id)->first();
+        dd($project);
+        // dd($task->id);
+        // $reports = Report::where('task_id', $task->id)->get();
+        // dd($reports);
         // $deletedUser = ProjectUser::with('user')->where('project_id', $id)->whereNotNull('deleted_at')->get();
         // dd($projectUser->toArray());
         // dd($projectUser);
@@ -34,7 +39,8 @@ class ProjectController extends Controller
             'invitations' => $project->invitations,
             'pendingInvitations' => $pendingInvitations,
             'projectUsers' => $projectUser,
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            // 'reports' => $reports
         ]);
     }
 

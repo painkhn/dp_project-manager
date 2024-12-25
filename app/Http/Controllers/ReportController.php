@@ -30,13 +30,16 @@ class ReportController extends Controller
      */
     public function store(StoreReportRequest $request, $taskId)
     {
-        dd($request);
         $task = Task::where('id', $taskId)->first();
+        // dd($request->message);
         Report::create([
             'message' => $request->message,
             'file' => $request->file,
             'user_id' => Auth::id(),
             'task_id' => $task->id
+        ]);
+        $task->update([
+            'status' => 'completed'
         ]);
     }
 

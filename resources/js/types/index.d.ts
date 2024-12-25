@@ -62,6 +62,16 @@ export interface TeamUsers {
     user: User;
 }
 
+export interface Report {
+    id: number;
+    user_id: number;
+    task_id: number;
+    user: User;
+    message: string;
+    file: string;
+    created_at: string;
+}
+
 export interface Tasks {
     id: number;
     title: string;
@@ -72,6 +82,7 @@ export interface Tasks {
     status: string;
     start_date: string;
     end_date: string;
+    report: Report[] | null;
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> =

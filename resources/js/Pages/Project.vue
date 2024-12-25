@@ -8,7 +8,7 @@ import ProjectInvite from '@/Components/projects/ProjectInvite.vue'
 import ProjectUsers from '@/Components/projects/ProjectUsers.vue';
 import ProjectInviteList from '@/Components/projects/ProjectInviteList.vue'
 import axios from 'axios'
-import { Project, ProjectInvitation, User, ProjectUser, Tasks } from '@/types'
+import { Project, ProjectInvitation, User, ProjectUser, Tasks, Report } from '@/types'
 import Alert from '@/Components/messages/Alert.vue';
 import ErrorAlert from '@/Components/messages/ErrorAlert.vue'; // Импортируем компонент ErrorAlert
 import { isValidDate } from '@/Utils/dateValidation'; // Импортируем функцию проверки даты

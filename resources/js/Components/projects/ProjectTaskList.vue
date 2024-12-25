@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { Project, Tasks } from '@/types';
+import { Project, Tasks, Report } from '@/types';
 import axios from 'axios';
 import { defineProps, handleError, ref } from 'vue';
 import { format } from 'date-fns';
 import { useForm } from '@inertiajs/vue3';
+import TaskReportForm from '../tasks/TaskReportForm.vue';
+import TaskReportList from '../tasks/TaskReportList.vue';
 
 const props = defineProps<{
     tasks: Tasks[] | null;
@@ -20,41 +22,42 @@ const taskDelete = async (taskId: number) => {
 };
 
 // Создаем массив флагов для каждой задачи
-const isTaskDetailsVisible = ref<boolean[]>([]);
+const isTaskDetailsVisible = ref<boolean>(false);
+const isTaskReportVisible = ref<boolean>(false);
+const btn_id = ref<number>();
 
 // Функция для переключения видимости деталей задачи
-const taskDetailsToggle = (index: number) => {
-    isTaskDetailsVisible.value = isTaskDetailsVisible.value.map((visible, i) => 
-        i === index ? !visible : visible
-    );
+const taskDetailsToggle = (taskId: number) => {
+    // isTaskDetailsVisible.value = isTaskDetailsVisible.value.map((visible, i) => 
+    //     i === index ? !visible : visible
+    // );
+    btn_id.value = taskId;
+    // console.log(btn_id.value);
+    
+    // isTaskDetailsVisible.value = !isTaskDetailsVisible.value
+}
+
+const closeDetails = (taskId: number) => {
+    btn_id.value = undefined;
+}
+
+const taskReportToggle = () => {
+    // isTaskReportVisible.value = isTaskReportVisible.value.map((visible, i) => 
+    //     i === index ? !visible : visible
+    // );
+    // isTaskReportVisible.value = !isTaskReportVisible.value
 }
 
 // Инициализируем массив флагов в зависимости от количества задач
-if (props.tasks) {
-    isTaskDetailsVisible.value = new Array(props.tasks.length).fill(false);
-}
+// if (props.tasks) {
+//     isTaskDetailsVisible.value = new Array(props.tasks.length).fill(false);
+// }
 
 const formatDate = (dateString: string) => {
     const date = new Date(dateString); // Преобразуем строку в объект Date
     return format(date, 'dd.MM.yyyy'); // Возвращаем дату в формате "дд.мм.гггг"
 };
 
-const form = useForm({
-    message: '',
-    file: '',
-});
-
-const handleSubmit = (taskId: number) => {
-
-    form.post(route('report.store', {taskId: taskId}), {
-        onSuccess: () => {
-            form.reset();
-        },
-        onError: (errors) => {
-            console.error(errors);
-        },
-    });
-};
 </script>
 
 <template>
@@ -84,16 +87,16 @@ const handleSubmit = (taskId: number) => {
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
                             </svg>                                      
                         </button>
-                        <button class="ml-5" @click="taskDetailsToggle(index)">
-                            <svg v-if="!isTaskDetailsVisible[index]" class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <button class="ml-5" v-if="task.status == 'waiting' || $page.props.auth.user.id === props.project.user.id">
+                            <svg v-if="btn_id != task.id" :id="`btn-${task.id}`" @click="taskDetailsToggle(task.id)" class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
                             </svg>
-                            <svg v-else class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <svg v-if="btn_id == task.id" :id="`btn-${task.id}`" @click="closeDetails(task.id)" class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 15 7-7 7 7"/>
-                            </svg>                                                      
+                            </svg>
                         </button>
                     </div>
-                    <div v-if="isTaskDetailsVisible[index]">
+                    <div v-if="btn_id == task.id">
                         <p class="text-white text-lg mb-2">
                             {{ task.description }}
                         </p>
@@ -111,15 +114,11 @@ const handleSubmit = (taskId: number) => {
                                 {{ formatDate(task.end_date) }}
                             </p>
                         </div>
-                        <button class="text-white px-4 py-2 border border-white rounded-md transition-all hover:bg-white/10">
+                        <button @click="taskReportToggle()" class="text-white px-4 py-2 border border-white rounded-md transition-all hover:bg-white/10">
                             Отправить отчёт
                         </button>
-                        <!-- <form @submit.prevent="handleSubmit(task.id)">
-                            <input type="text" v-model="form.message">
-                            <button type="submit">
-                                фывафыв
-                            </button>
-                        </form> -->
+                        <TaskReportForm :task="task" :isTaskDetailsVisible="isTaskDetailsVisible" v-if="isTaskReportVisible" />
+                        <TaskReportList :task="task" />
                     </div>
                 </div>
             </li>
