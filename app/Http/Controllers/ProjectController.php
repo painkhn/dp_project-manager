@@ -32,7 +32,7 @@ class ProjectController extends Controller
             $projectUser = ProjectUser::with('user')->where('project_id', $id)->get();
 
             // Получаем задачи и сортируем их так, чтобы задачи со статусом 'waiting' были первыми
-            $tasks = Task::with('user', 'report')
+            $tasks = Task::with('user', 'report', 'report.user')
                 ->where('project_id', $id)
                 ->get()
                 ->sortBy(function ($task) {

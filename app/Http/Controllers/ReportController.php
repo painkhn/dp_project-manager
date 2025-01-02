@@ -43,9 +43,15 @@ class ReportController extends Controller
         ]);
     }
 
-    public function back($taskId)
+    public function back(StoreReportRequest $request, $taskId)
     {
         $task = Task::where('id', $taskId)->first();
+        Report::create([
+            'message' => $request->message,
+            'file' => $request->file,
+            'user_id' => Auth::id(),
+            'task_id' => $task->id
+        ]);
         $task->update([
             'status' => 'waiting'
         ]);
