@@ -43,10 +43,10 @@ class ReportController extends Controller
         ]);
     }
 
-    public function back($reportId)
+    public function back($taskId)
     {
-        $report = Report::findOrFail($reportId);
-        $report->update([
+        $task = Task::where('id', $taskId)->first();
+        $task->update([
             'status' => 'waiting'
         ]);
     }

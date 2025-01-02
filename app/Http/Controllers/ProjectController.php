@@ -19,28 +19,32 @@ class ProjectController extends Controller
      */
         public function index($id)
         {
-            $project = Project::with('user', 'task.report')->with('invitations', 'invitations.invitee')->where('id', $id)->findOrFail($id);
-            $pendingInvitations = ProjectInvitation::where('project_id', $id)->where('status', 'pending')->with('invitee')->get();
+            $project = Project::with('user', 'task.report')
+                ->with('invitations', 'invitations.invitee')
+                ->where('id', $id)
+                ->findOrFail($id);
+
+            $pendingInvitations = ProjectInvitation::where('project_id', $id)
+                ->where('status', 'pending')
+                ->with('invitee')
+                ->get();
+
             $projectUser = ProjectUser::with('user')->where('project_id', $id)->get();
-            $tasks = Task::with('user', 'report')->where('project_id', $id)->get();
-            $task = Task::where('project_id', $id)->first();
-            // dd($project);
-            // dd($task->id);
-            // $reports = Report::where('task_id', $task->id)->get();
-            // dd($reports);
-            // $deletedUser = ProjectUser::with('user')->where('project_id', $id)->whereNotNull('deleted_at')->get();
-            // dd($projectUser->toArray());
-            // dd($projectUser);
-            // dd($projectUser);
-            // $invitation = ProjectInvitation::where('id', $id)->first();
-            // dd($project->user);
+
+            // Получаем задачи и сортируем их так, чтобы задачи со статусом 'waiting' были первыми
+            $tasks = Task::with('user', 'report')
+                ->where('project_id', $id)
+                ->get()
+                ->sortBy(function ($task) {
+                    return $task->status === 'waiting' ? 0 : 1; // 'waiting' идут первыми
+                });
+
             return Inertia::render('Project', [
                 'project' => $project,
                 'invitations' => $project->invitations,
                 'pendingInvitations' => $pendingInvitations,
                 'projectUsers' => $projectUser,
-                'tasks' => $tasks,
-                // 'reports' => $reports
+                'tasks' => $tasks->values(), // Преобразуем коллекцию в индексированный массив
             ]);
         }
 

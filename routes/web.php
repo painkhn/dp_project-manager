@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::controller(ReportController::class)->group(function() {
         Route::post('/task/{taskId}/report/store', 'store')->name('report.store');
+        Route::patch('/task/{taskId}/report/back', 'back')->name('report.back');
     });
 });
 
