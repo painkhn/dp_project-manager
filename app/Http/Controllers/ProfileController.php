@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\{ User, Project, ProjectInvitation, TeamInvitation, Team };
+use App\Models\ProjectUser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,12 +28,23 @@ class ProfileController extends Controller
             ->get();
         // dd($invitations);
         $user = User::where('id', $id)->with('project')->first();
+        // $projects = Project::where('user_id', $user->id)->with('user')->get();
+        // $user_project = Project::where('user_id', $user->id)->with('user')->first();
+        // dd($user_project);
+        // $projectUser = ProjectUser::where('project_id', $projects->id)->where('user_id', $user->id);
+        $projects = Project::whereHas('projectUser', function ($query) use ($id) {
+            $query->where('user_id', $id);
+        })->with('projectUser')->get();
+
+        $userProjects = Project::where('user_id', $user->id)->with('user')->get();
+
         $teams = Team::where('owner_id', $user->id)->get();
         // здесь нужно как то получить и передать приглашения
         return Inertia::render('Profile', [
             // 'user_id' => Auth::id(),
             'user' => $user,
-            'projects' => Project::where('user_id', $user->id)->with('user')->get(),
+            'projects' => $projects,
+            'userProjects' => $userProjects,
             'projectInvitations' => $projectInvitations,
             'teamInvitations' => $teamInvitations,
             'teams' => $teams

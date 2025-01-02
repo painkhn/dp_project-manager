@@ -1,0 +1,24 @@
+<script setup lang="ts">
+import DeleteUserForm from '@/Pages/Profile/Partials/DeleteUserForm.vue';
+import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue';
+import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue';
+
+</script>
+
+<template>
+    <div class="pb-5">
+        <div class="space-y-6">
+            <div class="bg-white dark:bg-transparent shadow sm:rounded-lg">
+                <UpdateProfileInformationForm class="max-w-xl" />
+            </div>
+
+            <div class="bg-white dark:bg-transparent shadow sm:rounded-lg">
+                <UpdatePasswordForm class="max-w-xl" />
+            </div>
+
+            <div class="bg-white dark:bg-transparent shadow sm:rounded-lg">
+                <DeleteUserForm class="max-w-xl" />
+            </div>
+        </div>
+    </div>
+</template>
