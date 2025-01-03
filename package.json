@@ -23,6 +23,7 @@
     "dependencies": {
         "date-fns": "^4.1.0",
         "flowbite": "^2.5.2",
+        "flowbite-vue": "^0.1.6",
         "vue-the-mask": "^0.11.1"
     }
 }
