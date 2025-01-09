@@ -10,6 +10,7 @@ import { Project, User, ProjectInvitation, TeamInvitation, Teams } from '@/types
 import axios from 'axios';
 import ProjectTeams from './Project/ProjectTeams.vue';
 import ProfileEdit from '@/Components/profile/ProfileEdit.vue';
+import Layout from '@/Layouts/MainLayout.vue'
 
 const props = defineProps<{
     canLogin?: boolean;
@@ -121,9 +122,7 @@ onUnmounted(() => {
 
     <Head :title="props.user.name" />
 
-    <Header />
-
-    <main class="">
+    <Layout>
         <div class="w-full flex gap-10 my-0 relative">
             <div class="max-w-72 main-height w-full text-white border-r border-white/40">
                 <ul class="flex flex-col items-center gap-10 max-w-[170px] mx-auto">
@@ -309,7 +308,7 @@ onUnmounted(() => {
                 </ul>
             </div>
         </div>
-    </main>
+    </Layout>
 </template>
 
 <style scoped>

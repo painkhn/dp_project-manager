@@ -58,6 +58,7 @@
 </script>
 
 <template>
+
     <Head title="Создать проект" />
 
     <Header />
@@ -69,20 +70,25 @@
                     <ErrorAlert :message="errorMessage" @close="errorMessage = ''" />
                     <div class="flex flex-col gap-2">
                         <label for="">Название проекта</label>
-                        <input type="text" v-model="form.title" class="!border-0 !border-b px-2 focus:!ring-0 focus:!border-0 focus:!border-b focus:bg-white/5 rounded-t-md focus:!border-white ring-none border-white bg-transparent">
+                        <input type="text" v-model="form.title"
+                            class="!border-0 !border-b px-2 focus:!ring-0 focus:!border-0 focus:!border-b focus:bg-white/5 rounded-t-md focus:!border-white ring-none border-white bg-transparent">
                     </div>
                     <div class="flex flex-col gap-2">
                         <label for="">Описание проекта</label>
-                        <textarea type="text" v-model="form.description" class="!border-0 !border-b px-2 py-2 h-40 focus:!ring-0 focus:!border-0 focus:!border-b focus:bg-white/5 rounded-t-md focus:!border-white ring-none border-white bg-transparent"></textarea>
+                        <textarea type="text" v-model="form.description"
+                            class="!border-0 !border-b px-2 py-2 h-40 focus:!ring-0 focus:!border-0 focus:!border-b focus:bg-white/5 rounded-t-md focus:!border-white ring-none border-white bg-transparent"></textarea>
                     </div>
                     <div class="flex flex-col gap-2">
                         <label for="">Дедлайн</label>
                         <div class="flex items-center gap-5">
-                            <input type="text" v-date-mask v-model="form.start_date" placeholder="Начало проекта" class="w-full !border-0 !border-b px-2 focus:!ring-0 focus:!border-0 focus:!border-b focus:bg-white/5 rounded-t-md focus:!border-white ring-none border-white bg-transparent">
-                            <input type="text" v-date-mask v-model="form.end_date" placeholder="Конец проекта" class="w-full !border-0 !border-b px-2 focus:!ring-0 focus:!border-0 focus:!border-b focus:bg-white/5 rounded-t-md focus:!border-white ring-none border-white bg-transparent">
+                            <input type="text" v-date-mask v-model="form.start_date" placeholder="Начало проекта"
+                                class="w-full !border-0 !border-b px-2 focus:!ring-0 focus:!border-0 focus:!border-b focus:bg-white/5 rounded-t-md focus:!border-white ring-none border-white bg-transparent">
+                            <input type="text" v-date-mask v-model="form.end_date" placeholder="Конец проекта"
+                                class="w-full !border-0 !border-b px-2 focus:!ring-0 focus:!border-0 focus:!border-b focus:bg-white/5 rounded-t-md focus:!border-white ring-none border-white bg-transparent">
                         </div>
                     </div>
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Отправить</button>
+                    <button type="submit"
+                        class="w-full border border-white rounded-md hover:!bg-white/10 transition-all text-white bg-transparent py-2">Отправить</button>
                 </form>
             </div>
         </div>

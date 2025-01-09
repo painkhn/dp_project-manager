@@ -14,6 +14,7 @@ import ErrorAlert from '@/Components/messages/ErrorAlert.vue'; // Импорти
 import { isValidDate } from '@/Utils/dateValidation'; // Импортируем функцию проверки даты
 import ProjectTaskForm from '@/Components/projects/ProjectTaskForm.vue';
 import ProjectTaskList from '@/Components/projects/ProjectTaskList.vue';
+import Layout from '@/Layouts/MainLayout.vue'
 
 const props = defineProps<{
     canLogin?: boolean;
@@ -109,15 +110,14 @@ const handleSubmit = () => {
 </script>
 
 <template>
+
     <Head :title="props.project.title" />
 
-    <Header />
-
-    <main>
+    <Layout>
         <Alert class="alert-deleted opacity-0 transition-all" :value="'Удалено'" />
         <div class="w-full mx-auto p-5 my-0 rounded-xl flex gap-5">
             <div class="w-2/3">
-                    <h1 class="text-white font-bold text-4xl mb-5">
+                <h1 class="text-white font-bold text-4xl mb-5">
                     {{ props.project.title }}
                 </h1>
                 <p class="text-white/90 font-semibold text-2xl mb-5">
@@ -128,13 +128,16 @@ const handleSubmit = () => {
                     <span>-</span>
                     {{ props.project.end_date }}
                 </p>
-                <Link :href="route('profile.index', { id: props.project.user.id })" class="text-white text-2xl mb-5 uppercase transition-all hover:text-white/80 font-bold">
-                    {{ props.project.user.name }}
+                <Link :href="route('profile.index', { id: props.project.user.id })"
+                    class="text-white text-2xl mb-5 uppercase transition-all hover:text-white/80 font-bold">
+                {{ props.project.user.name }}
                 </Link>
                 <h2 class="text-white text-4xl font-bold my-5 text-center">
                     Задачи проекта
                 </h2>
-                <ProjectTaskForm :project="(props.project as Project)" :projectUsers="(props.projectUsers as ProjectUser[] | null)" v-if="$page.props.auth.user.id === props.project.user.id" />
+                <ProjectTaskForm :project="(props.project as Project)"
+                    :projectUsers="(props.projectUsers as ProjectUser[] | null)"
+                    v-if="$page.props.auth.user.id === props.project.user.id" />
                 <ProjectTaskList :tasks="(props.tasks as Tasks[] | null)" :project="(props.project as Project)" />
             </div>
             <div class="w-1/3 text-white border-l border-white/50 pl-5">
@@ -142,23 +145,27 @@ const handleSubmit = () => {
                     <h2 class="text-white text-xl font-bold mb-5">
                         Пригласить пользователя
                     </h2>
-                    <ProjectInvite :projectId="props.project.id" @fetch-invited-users="fetchInvitedUsers" class="mb-5"  />
+                    <ProjectInvite :projectId="props.project.id" @fetch-invited-users="fetchInvitedUsers"
+                        class="mb-5" />
                 </div>
-                
+
                 <div v-if="$page.props.auth.user.id == props.project.user.id">
                     <h2 class="text-white text-xl my-4 font-bold block mb-5">
                         Приглашены:
                     </h2>
-    
-                    <ProjectInviteList :pendingInvitations="props.pendingInvitations" :project="props.project" class="mb-5" />
+
+                    <ProjectInviteList :pendingInvitations="props.pendingInvitations" :project="props.project"
+                        class="mb-5" />
                 </div>
 
                 <h2 class="font-bold text-xl mb-4">
                     Пользователи проекта
                 </h2>
-                <button @click="toggleProjectUsers" type="button" class="open-btn w-full py-2 border border-white rounded-md transition-all hover:bg-white/10">Открыть</button>    
-                <ProjectUsers v-if="projectUsersIsVisible" @toggle="toggleProjectUsers" :isVisible="projectUsersIsVisible" :projectUsers="props.projectUsers" :project="props.project" />
+                <button @click="toggleProjectUsers" type="button"
+                    class="open-btn w-full py-2 border border-white rounded-md transition-all hover:bg-white/10">Открыть</button>
+                <ProjectUsers v-if="projectUsersIsVisible" @toggle="toggleProjectUsers"
+                    :isVisible="projectUsersIsVisible" :projectUsers="props.projectUsers" :project="props.project" />
             </div>
         </div>
-    </main>
+    </Layout>
 </template>
