@@ -6,6 +6,7 @@ import { initFlowbite } from 'flowbite';
 import Header from '@/Components/main/Header.vue';
 import Sidebar from '@/Components/main/Sidebar.vue';
 import Layout from '@/Layouts/MainLayout.vue'
+import { FwbDropdown, FwbListGroup, FwbListGroupItem } from 'flowbite-vue'
 
 const props = defineProps<{
     canLogin?: boolean;
@@ -25,6 +26,7 @@ const sidebarToggle = () => {
 </script>
 
 <template>
+
     <Head title="Главная страница" />
 
     <Layout></Layout>

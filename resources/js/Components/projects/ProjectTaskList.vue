@@ -11,6 +11,40 @@ import DeleteIcon from '../ui/DeleteIcon.vue';
 import DownArrowIcon from '../ui/DownArrowIcon.vue';
 import UpArrowIcon from '../ui/UpArrowIcon.vue';
 import CalendarIcon from '../ui/CalendarIcon.vue';
+import ShowIcon from '@/Components/ui/ShowIcon.vue'
+import {
+    FwbA,
+    FwbTable,
+    FwbTableBody,
+    FwbTableCell,
+    FwbTableHead,
+    FwbTableHeadCell,
+    FwbTableRow,
+} from 'flowbite-vue'
+import {
+    FwbAccordion,
+    FwbAccordionContent,
+    FwbAccordionHeader,
+    FwbAccordionPanel,
+} from 'flowbite-vue'
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table'
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog'
 
 const props = defineProps<{
     tasks: Tasks[] | null;
@@ -50,7 +84,7 @@ const formatDate = (dateString: string) => {
 
 <template>
     <div v-if="(props.tasks as Tasks[])?.length > 0" class="my-5">
-        <ul class="flex flex-col gap-5">
+        <!-- <ul class="flex flex-col gap-5">
             <li v-for="(task, index) in props.tasks" :key="index">
                 <div :class="[
                     'w-full px-4 py-2 border-l-4 transition-all hover:bg-white/10 flex flex-col gap-5',
@@ -108,7 +142,81 @@ const formatDate = (dateString: string) => {
                     </div>
                 </div>
             </li>
-        </ul>
+        </ul> -->
+        <!-- <fwb-table>
+            <fwb-table-head>
+                <fwb-table-head-cell>Product name</fwb-table-head-cell>
+                <fwb-table-head-cell>Color</fwb-table-head-cell>
+                <fwb-table-head-cell>Category</fwb-table-head-cell>
+                <fwb-table-head-cell>Price</fwb-table-head-cell>
+                <fwb-table-head-cell>
+                    <span class="sr-only">Edit</span>
+                </fwb-table-head-cell>
+            </fwb-table-head>
+            <fwb-table-body>
+                <fwb-table-row v-for="(task, index) in props.tasks" :key="index">
+                    <fwb-table-cell>{{ task.title }}</fwb-table-cell>
+                    <fwb-table-cell>{{ task.status }}</fwb-table-cell>
+                    <fwb-table-cell>{{ task.user.name }}</fwb-table-cell>
+                    <fwb-table-cell></fwb-table-cell>
+                    <fwb-table-cell>
+                        <fwb-a href="#">
+                            Edit
+                        </fwb-a>
+                    </fwb-table-cell>
+                </fwb-table-row>
+            </fwb-table-body>
+        </fwb-table> -->
+        <Table>
+            <TableCaption>A list of your recent invoices.</TableCaption>
+            <TableHeader>
+                <TableRow>
+                    <TableHead class="w-[150px]">
+                        Название
+                    </TableHead>
+                    <TableHead>Статус</TableHead>
+                    <TableHead class="text-right">Ответственный</TableHead>
+                    <TableHead class="text-right">
+                        <!--  -->
+                    </TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                <TableRow v-for="(task, index) in props.tasks" :key="index">
+                    <TableCell class="font-medium">
+                        {{ task.title }}
+                    </TableCell>
+                    <TableCell>
+                        <p v-if="task.status === 'waiting'">
+                            В процессе
+                        </p>
+                        <p v-else>
+                            Выполнено
+                        </p>
+                    </TableCell>
+                    <TableCell class="text-right">{{ task.user.name }}</TableCell>
+                    <TableCell class="text-right">
+                        <Dialog>
+                            <DialogTrigger v-if="task.status == 'waiting' || $page.props.auth.user.id === props.project.user.id">
+                                <ShowIcon />
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>{{ task.title }}</DialogTitle>
+                                    <DialogDescription>
+                                        {{ task.description }}
+                                    </DialogDescription>
+                                </DialogHeader>
+
+                                <DialogFooter>
+                                    Save changes
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
+                    </TableCell>
+                </TableRow>
+            </TableBody>
+        </Table>
     </div>
     <div v-else>
         <p class="text-white/90 text-2xl text-center">

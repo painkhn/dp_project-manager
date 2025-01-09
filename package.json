@@ -21,9 +21,15 @@
         "vue-tsc": "^2.0.24"
     },
     "dependencies": {
+        "@radix-icons/vue": "^1.0.0",
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
         "date-fns": "^4.1.0",
         "flowbite": "^2.5.2",
         "flowbite-vue": "^0.1.6",
+        "radix-vue": "^1.9.12",
+        "tailwind-merge": "^2.6.0",
+        "tailwindcss-animate": "^1.0.7",
         "vue-the-mask": "^0.11.1"
     }
 }
