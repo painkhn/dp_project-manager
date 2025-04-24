@@ -56,9 +56,9 @@ const fetchInvitedUsers = async (projectId: number) => {
 }
 
 const isNewTaskVisible = ref<boolean>(false)
-const toggleNewTask = () => {
-    isNewTaskVisible.value = !isNewTaskVisible.value
-}
+// const toggleNewTask = () => {
+//     isNewTaskVisible.value = !isNewTaskVisible.value
+// }
 
 onMounted(() => {
     initFlowbite();
@@ -67,46 +67,47 @@ onMounted(() => {
     console.log(props.projectUsers);
 });
 
-const isSidebarVisible = ref(false);
+// const isSidebarVisible = ref(false);
 
-const sidebarToggle = () => {
-    isSidebarVisible.value = !isSidebarVisible.value;
-};
+// const sidebarToggle = () => {
+//     isSidebarVisible.value = !isSidebarVisible.value;
+// };
 
-const form = useForm({
-    title: '',
-    description: '',
-    user_id: '',
-    start_date: '',
-    end_date: '',
-});
+// const form = useForm({
+//     title: '',
+//     description: '',
+//     user_id: '',
+//     start_date: '',
+//     end_date: '',
+// });
 
-const errorMessage = ref('');
+// const errorMessage = ref('');
 
 // Пример обработки данных формы
-const handleSubmit = () => {
-    if (!isValidDate(form.start_date)) {
-        errorMessage.value = 'Неверный формат даты начала проекта. Используйте формат YYYY-MM-DD.';
-        console.log(form.start_date);
-        return;
-    }
+// const handleSubmit = () => {
+//     if (!isValidDate(form.start_date)) {
+//         errorMessage.value = 'Неверный формат даты начала проекта. Используйте формат YYYY-MM-DD.';
+//         console.log(form.start_date);
+//         return;
+//     }
 
-    if (!isValidDate(form.end_date)) {
-        errorMessage.value = 'Неверный формат даты окончания проекта. Используйте формат YYYY-MM-DD.';
-        console.log(form.end_date);
-        return;
-    }
+//     if (!isValidDate(form.end_date)) {
+//         errorMessage.value = 'Неверный формат даты окончания проекта. Используйте формат YYYY-MM-DD.';
+//         console.log(form.end_date);
+//         return;
+//     }
 
-    form.post(route('task.store', {id: props.project.id}), {
-        onSuccess: () => {
-            form.reset();
-            isNewTaskVisible.value = false;
-        },
-        onError: (errors) => {
-            console.error(errors);
-        },
-    });
-};
+//     form.post(route('task.store', {id: props.project.id}), {
+//         onSuccess: () => {
+//             form.reset();
+//             isNewTaskVisible.value = false;
+//         },
+//         onError: (errors) => {
+//             console.error(errors);
+//         },
+//     });
+// };
+
 </script>
 
 <template>
@@ -136,8 +137,18 @@ const handleSubmit = () => {
                     Задачи проекта
                 </h2>
                 <ProjectTaskForm :project="(props.project as Project)"
+                :user="(props.user as User)"
                     :projectUsers="(props.projectUsers as ProjectUser[] | null)"
-                    v-if="$page.props.auth.user.id === props.project.user.id" />
+                    v-if="$page.props.auth.user.id === props.project.user.id">
+                    <button
+                        class="w-full flex justify-center py-2 border border-white rounded-md transition-all hover:bg-white/10 mb-5">
+                        <svg class="w-6 h-6 text-white" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                    </button>
+                </ProjectTaskForm>
                 <ProjectTaskList :tasks="(props.tasks as Tasks[] | null)" :project="(props.project as Project)" />
             </div>
             <div class="w-1/3 text-white border-l border-white/50 pl-5">

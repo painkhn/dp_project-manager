@@ -156,8 +156,8 @@ onUnmounted(() => {
                             Всего проектов: <span>{{ (props.projects as Project[])?.length }}</span>
                         </p>
                     </li>
-                    <li class="flex flex-col gap-4">
-                        <p class="flex items-center gap-4">
+                    <li class="space-y-4">
+                        <p class="flex items-center gap-4 transition-all hover:opacity-80 cursor-pointer">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -167,7 +167,8 @@ onUnmounted(() => {
                             </svg>
                             Профиль
                         </p>
-                        <p class="flex items-center gap-4 cursor-pointer" @click="projectsVisible">
+                        <p class="flex items-center gap-4 transition-all hover:opacity-80 cursor-pointer"
+                            @click="projectsVisible">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -177,7 +178,7 @@ onUnmounted(() => {
                             </svg>
                             Список проектов
                         </p>
-                        <p class="flex items-center gap-4">
+                        <p class="flex items-center gap-4 transition-all hover:opacity-80 cursor-pointer">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -187,7 +188,7 @@ onUnmounted(() => {
                             </svg>
                             Расписание
                         </p>
-                        <p class="flex items-center gap-4">
+                        <p class="flex items-center gap-4 transition-all hover:opacity-80 cursor-pointer">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -199,7 +200,8 @@ onUnmounted(() => {
                             </svg>
                             Аналитика
                         </p>
-                        <p class="flex items-center gap-4 cursor-pointer" @click="editVisible">
+                        <p class="flex items-center gap-4 transition-all hover:opacity-80 cursor-pointer"
+                            @click="editVisible">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -209,7 +211,8 @@ onUnmounted(() => {
                             </svg>
                             Редактировать
                         </p>
-                        <p class="flex items-center gap-4 cursor-pointer" @click="teamsVisible">
+                        <p class="flex items-center gap-4 transition-all hover:opacity-80 cursor-pointer"
+                            @click="teamsVisible">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -252,7 +255,7 @@ onUnmounted(() => {
                                 <p class="text-white/90">
                                     Приглашение от
                                     <Link :href="route('profile.index', { id: invitation.inviter.id })">{{
-                                        invitation.inviter.name }}</Link>
+                                    invitation.inviter.name }}</Link>
                                 </p>
                             </div>
                             <div class="flex items-center gap-7">
@@ -287,7 +290,7 @@ onUnmounted(() => {
                                 <p class="text-white/90">
                                     Приглашение от
                                     <Link :href="route('profile.index', { id: invitation.inviter.id })">{{
-                                        invitation.inviter.name }}</Link>
+                                    invitation.inviter.name }}</Link>
                                 </p>
                             </div>
                             <div class="flex items-center gap-3">

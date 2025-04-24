@@ -23,7 +23,7 @@ onMounted(() => {
 
 <template>
     <div>
-        <h2 class="text-white font-bold text-lg my-5">
+        <h2 class="text-white font-bold text-lg mb-2">
             История отчётов:
         </h2>
         <ul class="flex flex-col gap-3" v-if="(props.task.report as Report[])?.length > 0">

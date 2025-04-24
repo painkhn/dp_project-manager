@@ -197,14 +197,45 @@ const formatDate = (dateString: string) => {
                     <TableCell class="text-right">{{ task.user.name }}</TableCell>
                     <TableCell class="text-right">
                         <Dialog>
-                            <DialogTrigger v-if="task.status == 'waiting' || $page.props.auth.user.id === props.project.user.id">
+                            <DialogTrigger
+                                v-if="task.status == 'waiting' || $page.props.auth.user.id === props.project.user.id">
                                 <ShowIcon />
                             </DialogTrigger>
                             <DialogContent>
                                 <DialogHeader>
-                                    <DialogTitle>{{ task.title }}</DialogTitle>
+                                    <DialogTitle class="mb-1">{{ task.title }}</DialogTitle>
                                     <DialogDescription>
-                                        {{ task.description }}
+                                        <div class="flex flex-col gap-2">
+                                            {{ task.description }}
+                                            <div class="flex gap-2">
+                                                <p>
+                                                    {{ formatDate(task.start_date) }}
+                                                </p>
+                                                <span>
+                                                    -
+                                                </span>
+                                                <p>
+                                                    {{ formatDate(task.end_date) }}
+                                                </p>
+                                            </div>
+                                            <TaskReportList :task="task" :project="props.project" />
+                                            <Dialog>
+                                                <div>
+                                                    <DialogTrigger class="px-4 py-2 border border-white rounded-md text-white transition-all hover:bg-white/10">
+                                                        Отправить отчёт
+                                                    </DialogTrigger>
+                                                </div>
+                                                <DialogContent>
+                                                    <DialogHeader>
+                                                        <DialogTitle>Отправить отчёт</DialogTitle>
+                                                        <DialogDescription>
+                                                            <TaskReportForm :task="task"
+                                                                :isTaskDetailsVisible="isTaskDetailsVisible" />
+                                                        </DialogDescription>
+                                                    </DialogHeader>
+                                                </DialogContent>
+                                            </Dialog>
+                                        </div>
                                     </DialogDescription>
                                 </DialogHeader>
 

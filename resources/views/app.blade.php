@@ -18,6 +18,18 @@
     </head>
     <body class="font-sans antialiased dark bg-black/95 min-h-screen">
         @inertia
+        <style>
+            /*Убрать полосу прокрутки у элемента*/
+            .element::-webkit-scrollbar {
+                width: 0;
+            }
+
+            /*Убрать полосу прокрутки для всей страницы*/
+            ::-webkit-scrollbar {
+                width: 0;
+            }
+
+        </style>
 
         <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     </body>
